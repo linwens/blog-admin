@@ -1,0 +1,37 @@
+/*常用mixin*/
+.px2rem(@name,@px){
+	@{name}:@px/75rem
+}
+.po(@type,@top:0,@left:0){
+	position:@type;
+	top:@top;
+	left:@left;
+}
+.ma(){
+	margin: 0 auto;
+}
+.btns(@w:0;@h:0;@lh:0){
+	display: block;
+	width: @w;
+	height: @h;
+	line-height: @lh;
+	text-align: center;
+}
+.font(@fs:12px;@fc:#000;@fw:normal){
+	font-size: @fs;
+	font-weight: @fw;
+	color: @fc;
+}
+/*分开写是因为，雪碧图，背景图的区别就是定位position;*/
+.bg(@url:'';@bgc:'';@bgr:no-repeat){
+	background:url('@{img-url}/@{url}') @bgc @bgr;
+	.bgp(@px:center,@py:center){
+		background-position:@px @py;
+	};
+}
+.bgs(@sx:100%;@sy:100%){
+	-webkit-background-size:@sx @sy;
+	-moz-background-size:@sx @sy;
+	-o-background-size:@sx @sy;
+	background-size:@sx @sy;
+};

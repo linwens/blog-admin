@@ -1,0 +1,10 @@
+/*自定义函数*/
+@_myFn: `(function(){
+    this._px2rem = function(px){//px转rem
+        return (px/75).toFixed(2) +'rem';
+    };
+    this._em2rem = function(px){//em转rem
+        return px/64 +'rem';
+    };
+})()`;
+.banner{ margin: ~`_px2rem(100)` ~`_em2rem(100)` ~`_em2rem(100)` ~`_em2rem(100)`; }
