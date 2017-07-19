@@ -1,6 +1,9 @@
 <!-- 该项目每个vue文件的代码模板 -->
 <template>
     <div id="publish">
+        <div class="mkd-tips">
+            markdown语法提示
+        </div>
         <h2>标题</h2>
         <el-input v-model="title" placeholder="输入文章标题" size="small"></el-input>
         <h2>正文</h2>
