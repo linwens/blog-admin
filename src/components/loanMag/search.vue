@@ -2,7 +2,7 @@
 <template>
     <div id="search">
         <el-form :model='searchForm' :rules="searchFormrules" ref="searchForm" label-position="right">
-            <el-form-item prop="schWord" label="标的名称" label-width="100px">
+            <el-form-item prop="schWord" label="文章标题" label-width="100px">
                 <el-input
                     placeholder="请输入内容模糊查询"
                     icon="search"

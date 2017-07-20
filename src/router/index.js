@@ -5,7 +5,7 @@ import Router from 'vue-router'
 /*页面引入及路由编写，请用路由嵌套存放子页面*/
 
 import blog from '@/router/map/blog'
-
+import html5 from '@/router/map/html5'
 const Home = resolve => require(['@/pages/home'], resolve);
 const Login = resolve => require(['@/pages/login'], resolve);
 const Unfind = resolve => require(['@/pages/unfind'], resolve);
@@ -51,6 +51,7 @@ const router = new Router({
             hidden: true,
         },
         blog,
+        html5,
         {
             path: '*',//如果路由不匹配跳转到404,注意要放在最后面
             hidden: true,

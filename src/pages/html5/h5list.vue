@@ -1,5 +1,5 @@
 <template>
-    <div id="articleList">
+    <div id="h5list">
         <el-row class="m-util searchContainer">
             <el-col :span="6">
                 <hqbSch :realSchopt="searchForm" :fakeSchopt="schOldval" :allrefs="this.$refs" ref="hqbSch">
@@ -9,19 +9,19 @@
         </el-row>
         <el-row class="borderStyle">
             <el-row type="flex" justify="center" align="middle" class="m-content">
-                <el-table :data="artList" stripe>
-                    <el-table-column prop="title" label="文章标题" min-width="100" header-align="center" align="center"></el-table-column>
-                    <el-table-column prop="text" label="文章正文" min-width="200" header-align="center" align="center"></el-table-column>
-                    <el-table-column prop="time" label="文章发布日期" min-width="200" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
-                    <el-table-column prop="aid" label="操作" min-width="100" header-align="center" align="center">
+                <el-table :data="H5list" stripe>
+                    <el-table-column prop="name" label="作品名称" min-width="100" header-align="center" align="center"></el-table-column>
+                    <el-table-column prop="desc" label="作品描述" min-width="200" header-align="center" align="center"></el-table-column>
+                    <el-table-column prop="time" label="作品发布日期" min-width="200" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
+                    <el-table-column prop="hid" label="操作" min-width="100" header-align="center" align="center">
                         <template scope="tableOp">
-                            <el-button size="small" type="primary" @click="goPage('/blog/publish/'+tableOp.row.aid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
+                            <el-button size="small" type="primary" @click="goPage('/html5/addItem/'+tableOp.row.hid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
                             <el-button size="small" type="danger" @click="handleDelete(tableOp.$index, tableOp.row)"><i class="el-icon-delete2 el-icon--left"></i>删除</el-button>
                         </template>
                     </el-table-column>
                 </el-table>
             </el-row>
-            <hqbPage :schOpt="schOldval" :ctrlOpt="apiCtrl" :ajaxUrl="'/api/ajax/getList'" @getData="getPageData" ref="hqbPage"></hqbPage>
+            <hqbPage :schOpt="schOldval" :ctrlOpt="apiCtrl" :ajaxUrl="'/api/ajax/getH5list'" @getData="getPageData" ref="hqbPage"></hqbPage>
         </el-row>
     </div>
 </template>
@@ -32,13 +32,13 @@ import hqbSch from '@/components/loanMag/search';
 import { timeFormat } from '@/assets/js/cmn/util'  //引入vue插件,或其他组件
 import { Notification } from 'element-ui';
 export default {
-    name: 'articleList',
+    name: 'h5list',
     data: function(){
         return{
             searchForm:{
                 schWord:''
             },
-            artList: [],
+            H5list: [],
             schOldval:{//存储旧的搜索参数
                 schWord:''
             },
@@ -54,27 +54,18 @@ export default {
             this.$router.push({path:val})
         },
         getPageData(rslt){
-            for(let i = 0;i<rslt.length;i++){//截取第一对HTML标签内(<,>)的文案
-                var stt = rslt[i].text.indexOf('>');
-                var end = rslt[i].text.indexOf('<',1);
-                if(end>20){
-                    end = 20
-                }
-                rslt[i].text = rslt[i].text.substring(stt+1, end)+'...';
-            }
-            this.artList = rslt;
+            this.H5list = rslt;
         },
         timeFormat(row, column){//时间戳转化
             return timeFormat(row[column.property])
         },
         handleDelete(index, row) {
-            console.log(index+'||'+JSON.stringify(row));
             this.$confirm("此操作将删除文章，请仔细检查再确认?", '确认删除', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(() => {
-                this.getAjax(this.HOST+'/ajax/removeArticle',{aid:row.aid},'POST').then(data=>{
+                this.getAjax(this.HOST+'/ajax/removeH5',{hid:row.hid},'POST').then(data=>{
                     Notification({
                         type:'success',
                         message:'文章删除成功',
