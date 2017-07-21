@@ -3,14 +3,15 @@
         <el-form :model="h5Form" :rules="h5Formrules" ref="h5Form" label-position="left" label-width="90px">
             <el-row>
                 <el-col :span="6">
-                    <el-form-item label="H5作品名称">
+                    <el-form-item label="H5作品名称" prop="name">
                         <el-input v-model="h5Form.name"></el-input>
                     </el-form-item>
                 </el-col>
+                <el-col :span="6"><p style="line-height: 36px;margin-left: 10px;color: #ff4949;">名称与前台项目的文件夹名称相同</p></el-col>
             </el-row>
             <el-row>
                 <el-col :span="16">
-                    <el-form-item label="H5作品描述">
+                    <el-form-item label="H5作品描述" prop="desc">
                         <el-input type="textarea" v-model="h5Form.desc" :rows="10"></el-input>
                     </el-form-item>
                 </el-col>

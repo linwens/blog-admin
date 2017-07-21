@@ -4,10 +4,16 @@
         <div class="mkd-tips">
             markdown语法提示
         </div>
-        <h2>标题</h2>
-        <el-input v-model="title" placeholder="输入文章标题" size="small"></el-input>
-        <h2>正文</h2>
-        <markdown-editor v-model="text" ref="markdownEditor" :configs="configs"></markdown-editor>
+        <el-form :model="articleForm" :rules="articleFormrules" ref="articleForm">
+            <el-form-item prop="title">
+                <h2>标题</h2>
+                <el-input v-model="articleForm.title" placeholder="输入文章标题" size="small"></el-input>
+            </el-form-item>
+            <el-form-item prop="text">
+                <h2>正文</h2>
+                <markdown-editor v-model="articleForm.text" ref="markdownEditor" :configs="configs"></markdown-editor>
+            </el-form-item>
+        </el-form>
         <el-tag
             :key="tag"
             v-for="tag in tags"
@@ -39,14 +45,13 @@ export default {
     name: 'publish',
     data: function(){
         return{
-            title:'',
-            text:'',
+            // title:'',
+            // text:'',
             tags:[],
-            // articleForm:{
-            //     title:'',
-            //     text:'',
-            //     tags:[]
-            // },
+            articleForm:{
+                title:'',
+                text:''
+            },
             inputVisible: false,
             inputValue: '',
             configs:{
@@ -60,7 +65,16 @@ export default {
             editPars:{
                 id:''
             },
-            option:''
+            option:'',
+            articleFormrules:{
+                title:[
+                    { required: true, message: '请输入文章标题', trigger: 'blur' },
+                    { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+                ],
+                text:[
+                    { required: true, message: '请输入文章正文', trigger: 'blur' }
+                ]
+            }
         }
     },
     components:{
@@ -88,37 +102,49 @@ export default {
         },
         //文章发布
         subArticle(){
-            console.log(this.tags);
-            let tagsObj = {};
-            for(var i = 1;i<=this.tags.length;i++){//拼成json传参
-                tagsObj = Object.assign(tagsObj,{
-                    ['tag'+i]:this.tags[i-1]
-                })
-            }
-            let parmas = null;
-            if(this.option == 'modify'){
-                parmas = Object.assign({},{title:this.title, text:this.text, tags:tagsObj, option:this.option, aid:this.$route.params.id})
-            }else{
-                parmas = Object.assign({},{title:this.title, text:this.text, tags:tagsObj, option:this.option})
-            }
-            this.getAjax(this.HOST+'/ajax/subArticle',parmas,'POST').then(data=>{
-                Notification({
-                    type:'success',
-                    message:'提交成功',
-                    customClass:'hqb-notice',
-                    duration:2000,
-                    offset:300
-                });
-                setTimeout(()=>{
-                    this.$router.push('/blog/list');
-                }, 1500);
-            })
+            this.$refs['articleForm'].validate((valid) => {
+                if (valid) {
+                    let tagsObj = {};
+                    for(var i = 1;i<=this.tags.length;i++){//拼成json传参
+                        tagsObj = Object.assign(tagsObj,{
+                            ['tag'+i]:this.tags[i-1]
+                        })
+                    }
+                    let parmas = null;
+                    if(this.option == 'modify'){
+                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, tags:tagsObj, option:this.option, aid:this.$route.params.id})
+                    }else{
+                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, tags:tagsObj, option:this.option})
+                    }
+                    this.getAjax(this.HOST+'/ajax/subArticle',parmas,'POST').then(data=>{
+                        Notification({
+                            type:'success',
+                            message:'提交成功',
+                            customClass:'hqb-notice',
+                            duration:2000,
+                            offset:300
+                        });
+                        setTimeout(()=>{
+                            this.$router.push('/blog/list');
+                        }, 1500);
+                    })
+                }else{
+                    Notification({
+                        type:'error',
+                        message:'数据输入有误，请检查！',
+                        customClass:'hqb-notice',
+                        duration:2000,
+                        offset:300
+                    })
+                    return false;
+                }
+            });
         },
         //获取已有文章详情
         getDetail(){
             this.getAjax(this.HOST+'/ajax/getArticle',{aid:this.$route.params.id, option:this.option},'GET').then(data=>{
-                this.title=data.articleDetail.title;
-                this.text=data.articleDetail.text;
+                this.articleForm.title=data.articleDetail.title;
+                this.articleForm.text=data.articleDetail.text;
                 this.tags=data.articleDetail.tags?data.articleDetail.tags:[];
             });
         }
