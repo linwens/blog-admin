@@ -43,6 +43,7 @@ export default {
         return{
             dialogImageUrl: '',
             dialogVisible: false,
+            size:'',
             url:'',
             desc:''
         }
@@ -71,10 +72,11 @@ export default {
         getPicurl(res, file, fileList){//上传成功后
             console.log(JSON.stringify(res)+'||'+JSON.stringify(file)+'||'+JSON.stringify(fileList));
             this.url = res.backUrl;
+            this.size = res.size
             console.log('图片提交成功');
         },
         submitImg(){
-            this.getAjax(this.HOST+'/ajax/saveImg',{desc:this.desc, url:this.url},'POST').then(data=>{
+            this.getAjax(this.HOST+'/ajax/saveImg',{desc:this.desc, size:this.size, url:this.url},'POST').then(data=>{
                     Notification({
                         type:'success',
                         message:'图片上传成功！',
