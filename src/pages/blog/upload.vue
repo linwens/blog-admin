@@ -17,17 +17,25 @@
                 <img width="100%" :src="dialogImageUrl" alt="">
             </el-dialog>
         </el-row>
-        <el-row class="u-title st-el-row">
-            <span class="u-stitle">图片描述：</span>
-            <el-input
-                type="textarea"
-                :rows="2"
-                placeholder="请输入内容"
-                v-model="desc"
-                :autosize="{ minRows: 4}"
-                resize="none">
-            </el-input>
-        </el-row>
+        <el-form :model="imgForm" :rules="imgFormrules" ref="imgForm">
+            <el-row class="u-title st-el-row">
+                <el-form-item prop="title">
+                    <el-input v-model="imgForm.title" placeholder="请输入图片标题"></el-input>
+                </el-form-item>
+            </el-row>
+            <el-row class="u-title st-el-row">
+                <el-form-item prop="desc">
+                    <el-input
+                        type="textarea"
+                        :rows="2"
+                        placeholder="请输入图片描述"
+                        v-model="imgForm.desc"
+                        :autosize="{ minRows: 4}"
+                        resize="none">
+                    </el-input>
+                </el-form-item>
+            </el-row>
+        </el-form>
         <el-row>
             <el-button type="primary" @click="submitImg">保存提交</el-button>
         </el-row>
@@ -45,7 +53,20 @@ export default {
             dialogVisible: false,
             size:'',
             url:'',
-            desc:''
+            exif:null,
+            imgForm:{
+                title:'',
+                desc:''
+            },
+            imgFormrules:{
+                title:[
+                    { required: true, message: '请输入图片标题', trigger: 'blur' },
+                    { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+                ],
+                desc:[
+                    { required: true, message: '请输入图片描述', trigger: 'blur' }
+                ]
+            }
         }
     },
     components:{},
@@ -72,22 +93,36 @@ export default {
         getPicurl(res, file, fileList){//上传成功后
             console.log(JSON.stringify(res)+'||'+JSON.stringify(file)+'||'+JSON.stringify(fileList));
             this.url = res.backUrl;
-            this.size = res.size
+            this.size = res.size;
+            this.exif = res.exif;
             console.log('图片提交成功');
         },
         submitImg(){
-            this.getAjax(this.HOST+'/ajax/saveImg',{desc:this.desc, size:this.size, url:this.url},'POST').then(data=>{
+            this.$refs['imgForm'].validate((valid) => {
+                if (valid) {
+                    this.getAjax(this.HOST+'/ajax/saveImg',{title:this.imgForm.title, desc:this.imgForm.desc, exif:this.exif, size:this.size, url:this.url},'POST').then(data=>{
+                            Notification({
+                                type:'success',
+                                message:'图片上传成功！',
+                                customClass:'hqb-notice',
+                                duration:2000,
+                                offset:300
+                            });
+                            setTimeout(()=>{
+                                this.$router.go(0);
+                            }, 1500);
+                    });
+                }else{
                     Notification({
-                        type:'success',
-                        message:'图片上传成功！',
+                        type:'error',
+                        message:'数据输入有误，请检查！',
                         customClass:'hqb-notice',
                         duration:2000,
                         offset:300
-                    });
-                    setTimeout(()=>{
-                        this.$router.go(0);
-                    }, 1500);
-            });
+                    })
+                    return false;
+                }
+            })
         }
     },
     mounted () {}
