@@ -11,12 +11,12 @@
                 <i class="iconfont icon-denglu-mima"></i>
                 <el-input type="password" v-model="loginForm.password" placeholder="密码"></el-input>
             </el-form-item>
-            <el-form-item prop="validCode">
+            <!-- <el-form-item prop="validCode">
                 <i class="iconfont icon-denglu-yanzhengma"></i>
                 <el-input v-model="loginForm.validCode" placeholder="验证码">
                     <el-button slot="append">获取验证码</el-button>
                 </el-input>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item>
                 <el-button type="primary" @click="loginSubmit('loginForm')" class="btn-doLogin">登录</el-button>
             </el-form-item>

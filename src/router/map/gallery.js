@@ -1,18 +1,19 @@
 const Home = resolve => require(['@/pages/home'], resolve);
-const publish = resolve => require(['@/pages/blog/publish'], resolve);
-const articleList = resolve => require(['@/pages/blog/articleList'], resolve);
+
+const upload = resolve => require(['@/pages/gallery/upload'], resolve);
+const imgList = resolve => require(['@/pages/gallery/imgList'], resolve);
 export default {//module1,挂载在主页面home上
-	path: '/blog',
-	name: 'blog',
+	path: '/gallery',
+	name: 'gallery',
 	component: Home,
-	redirect: '/blog/page', //页面重定向(新增)
+	redirect: '/gallery/page', //页面重定向(新增)
 	icon: 'iconfont icon-caidanlan-jiekuanguanli',
 	children:[//子模块内容
 		{
-	    	path: 'publish/:id',
-	    	name: '文章发布',
+	    	path: 'upload/:id',
+	    	name: '增加图片',
 	    	components: {
-	    		page:publish
+	    		page:upload
 	    	},
 	    	meta: {
                 requireAuth: true,
@@ -20,9 +21,9 @@ export default {//module1,挂载在主页面home上
 	    },
 	    {
 	    	path: 'list',
-	    	name: '文章列表',
+	    	name: '图片列表',
 	    	components: {
-	    		page:articleList
+	    		page:imgList
 	    	},
 	    	meta: {
                 requireAuth: true,

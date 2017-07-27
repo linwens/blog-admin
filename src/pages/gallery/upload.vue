@@ -3,13 +3,14 @@
         <el-row class="u-title st-el-row">
             <span class="u-stitle">图片选择：</span>
             <el-upload
-                action="http://localhost:8388/api/ajax/uploadImg"
+                :action="actionUrl"
                 list-type="picture-card"
                 :on-preview="handlePictureCardPreview"
                 :on-remove="handleRemove"
                 :before-upload="beforeAvatarUpload"
                 :on-success="getPicurl"
                 name="imgFiles"
+                :file-list="imgList"
                 class="u-upload">
                 <i class="el-icon-plus"></i>
             </el-upload>
@@ -66,7 +67,9 @@ export default {
                 desc:[
                     { required: true, message: '请输入图片描述', trigger: 'blur' }
                 ]
-            }
+            },
+            imgList:[],
+            actionUrl:this.HOST+'/ajax/uploadImg'
         }
     },
     components:{},
@@ -98,9 +101,15 @@ export default {
             console.log('图片提交成功');
         },
         submitImg(){
+            let parmas = null;
+            if(this.option == 'modify'){
+                parmas = Object.assign({},{title:this.imgForm.title, desc:this.imgForm.desc, exif:this.exif, size:this.size, url:this.url, option:this.option, gid:this.$route.params.id})
+            }else{
+                parmas = Object.assign({},{title:this.imgForm.title, desc:this.imgForm.desc, exif:this.exif, size:this.size, url:this.url, option:this.option})
+            }
             this.$refs['imgForm'].validate((valid) => {
                 if (valid) {
-                    this.getAjax(this.HOST+'/ajax/saveImg',{title:this.imgForm.title, desc:this.imgForm.desc, exif:this.exif, size:this.size, url:this.url},'POST').then(data=>{
+                    this.getAjax(this.HOST+'/ajax/saveImg',parmas,'POST').then(data=>{
                             Notification({
                                 type:'success',
                                 message:'图片上传成功！',
@@ -109,7 +118,7 @@ export default {
                                 offset:300
                             });
                             setTimeout(()=>{
-                                this.$router.go(0);
+                                this.$router.push('/gallery/list');
                             }, 1500);
                     });
                 }else{
@@ -123,9 +132,25 @@ export default {
                     return false;
                 }
             })
+        },
+        getImginfo(){
+            this.getAjax(this.HOST+'/ajax/getImginfo',{gid:this.$route.params.id, option:this.option},'GET').then(res=>{
+                this.imgForm.title=res.imgInfo.title;
+                this.imgForm.desc=res.imgInfo.desc;
+                this.size = res.imgInfo.size;
+                this.exif = res.imgInfo.exif;
+                //图片
+                this.url = res.imgInfo.url;
+                this.imgList.push({"url":res.imgInfo.url})
+            });
         }
     },
-    mounted () {}
+    mounted () {
+        if(this.$route.params.id&&this.$route.params.id!=':id'){
+            this.option = 'modify'
+            this.getImginfo();
+        }
+    }
 
 }
 </script>

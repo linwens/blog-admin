@@ -6,6 +6,7 @@ import Router from 'vue-router'
 
 import blog from '@/router/map/blog'
 import html5 from '@/router/map/html5'
+import gallery from '@/router/map/gallery'
 const Home = resolve => require(['@/pages/home'], resolve);
 const Login = resolve => require(['@/pages/login'], resolve);
 const Unfind = resolve => require(['@/pages/unfind'], resolve);
@@ -52,6 +53,7 @@ const router = new Router({
         },
         blog,
         html5,
+        gallery,
         {
             path: '*',//如果路由不匹配跳转到404,注意要放在最后面
             hidden: true,

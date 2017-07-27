@@ -2,16 +2,15 @@
 <template>
   <div id="header">
       <el-col :span="4" class="u-logo">
-          <img src="../assets/hqb-logo.png" alt="华侨宝logo" style="height: 30px;line-height: 30px;vertical-align: middle;width: 97px;">
+          <!-- <img src="../assets/hqb-logo.png" alt="华侨宝logo" style="height: 30px;line-height: 30px;vertical-align: middle;width: 97px;"> -->
       </el-col>
       <el-col :span="20">
           <el-col :span="16">
-              <h2>华侨宝理财资产管理系统</h2>
+              <h2>linwens的后台系统</h2>
           </el-col>
           <el-col :span="8" class="u-userInfo">
-              <!-- <img src="../assets/avator.jpg" alt="用户头像" class="u-userAvator"> -->
               <i class="iconfont icon-dingbulan-wo"></i>
-              <span>Jay.liu</span>
+              <span>linwens</span>
               <el-button type="text" @click="logout"><i class="iconfont icon-dingbulan-zhuxiao"></i></el-button>
           </el-col>
       </el-col>
