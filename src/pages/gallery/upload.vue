@@ -38,7 +38,7 @@
             </el-row>
         </el-form>
         <el-row>
-            <el-button type="primary" @click="submitImg">保存提交</el-button>
+            <el-button type="primary" @click="submitImg" :disabled="btnCtrl">保存提交</el-button>
         </el-row>
     </div>
 </template>
@@ -50,6 +50,7 @@ export default {
     name: 'imgUp',
     data: function(){
         return{
+            btnCtrl:false,
             dialogImageUrl: '',
             dialogVisible: false,
             size:'',
@@ -134,14 +135,25 @@ export default {
             })
         },
         getImginfo(){
-            this.getAjax(this.HOST+'/ajax/getImginfo',{gid:this.$route.params.id, option:this.option},'GET').then(res=>{
-                this.imgForm.title=res.imgInfo.title;
-                this.imgForm.desc=res.imgInfo.desc;
-                this.size = res.imgInfo.size;
-                this.exif = res.imgInfo.exif;
+            this.getAjax(this.HOST+'/ajax/getImginfo',{gid:this.$route.params.id, option:this.option},'GET').then(data=>{
+                if(data.res_code==2){
+                    this.btnCtrl = true;
+                    Notification({
+                        type:'error',
+                        message:data.res_msg,
+                        customClass:'hqb-notice',
+                        duration:2000,
+                        offset:300
+                    });
+                    return;
+                }
+                this.imgForm.title=data.imgInfo.title;
+                this.imgForm.desc=data.imgInfo.desc;
+                this.size = data.imgInfo.size;
+                this.exif = data.imgInfo.exif;
                 //图片
-                this.url = res.imgInfo.url;
-                this.imgList.push({"url":res.imgInfo.url})
+                this.url = data.imgInfo.url;
+                this.imgList.push({"url":data.imgInfo.url})
             });
         }
     },

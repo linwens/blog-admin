@@ -11,8 +11,8 @@
             <el-row type="flex" justify="center" align="middle" class="m-content">
                 <el-table :data="artList" stripe>
                     <el-table-column prop="title" label="文章标题" min-width="100" header-align="center" align="center"></el-table-column>
-                    <el-table-column prop="text" label="文章正文" min-width="200" header-align="center" align="center"></el-table-column>
-                    <el-table-column prop="time" label="文章发布日期" min-width="200" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
+                    <el-table-column prop="brief" label="文章简介" min-width="300" header-align="center" align="center"></el-table-column>
+                    <el-table-column prop="time" label="文章发布日期" min-width="100" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
                     <el-table-column prop="aid" label="操作" min-width="100" header-align="center" align="center">
                         <template scope="tableOp">
                             <el-button size="small" type="primary" @click="goPage('/blog/publish/'+tableOp.row.aid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
@@ -54,14 +54,6 @@ export default {
             this.$router.push({path:val})
         },
         getPageData(rslt){
-            for(let i = 0;i<rslt.length;i++){//截取第一对HTML标签内(<,>)的文案
-                var stt = rslt[i].text.indexOf('>');
-                var end = rslt[i].text.indexOf('<',1);
-                if(end>20){
-                    end = 20
-                }
-                rslt[i].text = rslt[i].text.substring(stt+1, end)+'...';
-            }
             this.artList = rslt;
         },
         timeFormat(row, column){//时间戳转化

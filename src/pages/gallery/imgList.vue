@@ -13,9 +13,9 @@
                     <el-table-column prop="url" label="图片预览" min-width="100" header-align="center" align="center">
                         <template scope="scope"><img style="width:140px;height:70px;vertical-align: middle;" :src="scope.row.url" alt=""></template>
                     </el-table-column>
-                    <el-table-column prop="title" label="图片标题" min-width="100" header-align="center" align="center"></el-table-column>
-                    <el-table-column prop="desc" label="图片介绍" min-width="300" header-align="center" align="center"></el-table-column>
-                    <el-table-column prop="time" label="作品发布日期" min-width="200" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
+                    <el-table-column prop="title" label="图片标题" min-width="150" header-align="center" align="center"></el-table-column>
+                    <el-table-column prop="desc" label="图片介绍" min-width="350" header-align="center" align="center"></el-table-column>
+                    <el-table-column prop="time" label="作品发布日期" min-width="100" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
                     <el-table-column prop="hid" label="操作" min-width="100" header-align="center" align="center">
                         <template scope="tableOp">
                             <el-button size="small" type="primary" @click="goPage('/gallery/upload/'+tableOp.row.gid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>

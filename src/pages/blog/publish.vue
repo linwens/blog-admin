@@ -2,7 +2,23 @@
 <template>
     <div id="publish">
         <div class="mkd-tips">
-            markdown语法提示
+            <h3>markdown语法提示</h3>
+            <p><b>标题：</b>#、##、###.....</p>
+            <p><b>段落：</b> 在文本前加 > ；也可以通过 > 的叠加实现段落的嵌套，如：（>,>>,>>>,...）</p>
+            <p><b>列表：</b>无序列表（*、+、-）；有序列表（1、2、3等数字，不用在意数字正确性，mkd会自动按先后排序）</p>
+            <p><b>代码块：</b>前后包裹 ```并换行 ；三个不能多也不能少，一定要换行</p>
+            <p><b>插入图片：</b>![图片Alt](图片路径 图片title)</p>
+            <p><b>文本内超链接：</b></br>
+                &nbsp;&nbsp;&nbsp;如：我常去的网站[Google][1],[baidu][2]....</br>
+                &nbsp;&nbsp;&nbsp;然后再在文章的最后添加
+                &nbsp;&nbsp;&nbsp;[1]:http://www.google.com "Google",([]后面是引号，请注意)</br>
+                &nbsp;&nbsp;&nbsp;[2]:http://www.baidu.com "Baidu"
+            </p>
+            <p><b>自动连接：</b>用尖括号包裹一个url字符串，如：&lthttp://example.com/>，就会生成一个内容为'http://example.com/'的a标签</p>
+            <p><b>技巧：</b></br>
+                &nbsp;&nbsp;&nbsp;1、新窗口打开超链接就直接写HTML标签;
+                &nbsp;&nbsp;&nbsp;2、需要自定义样式的就直接写HTML标签;
+            </p>
         </div>
         <el-form :model="articleForm" :rules="articleFormrules" ref="articleForm">
             <el-form-item prop="title">
@@ -12,6 +28,10 @@
             <el-form-item prop="text">
                 <h2>正文</h2>
                 <markdown-editor v-model="articleForm.text" ref="markdownEditor" :configs="configs"></markdown-editor>
+            </el-form-item>
+            <el-form-item prop="brief">
+                <h2>文章摘要</h2>
+                <el-input type="textarea" v-model="articleForm.brief" :rows="3"></el-input>
             </el-form-item>
         </el-form>
         <el-tag
@@ -33,7 +53,7 @@
             @blur="handleInputConfirm"
         ></el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Tag</el-button>
-        <el-button type="primary" @click="subArticle">发布</el-button>
+        <el-button type="primary" @click="subArticle" :disabled="btnCtrl">发布</el-button>
     </div>
 </template>
 
@@ -45,12 +65,12 @@ export default {
     name: 'publish',
     data: function(){
         return{
-            // title:'',
-            // text:'',
+            btnCtrl:false,
             tags:[],
             articleForm:{
                 title:'',
-                text:''
+                text:'',
+                brief:''
             },
             inputVisible: false,
             inputValue: '',
@@ -73,6 +93,10 @@ export default {
                 ],
                 text:[
                     { required: true, message: '请输入文章正文', trigger: 'blur' }
+                ],
+                brief:[
+                    { required: true, message: '请输入文章摘要', trigger: 'blur' },
+                    { min: 3, max: 100, message: '长度在 3 到 300 个字符', trigger: 'blur' }
                 ]
             }
         }
@@ -112,9 +136,9 @@ export default {
                     }
                     let parmas = null;
                     if(this.option == 'modify'){
-                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, tags:tagsObj, option:this.option, aid:this.$route.params.id})
+                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, brief:this.articleForm.brief, tags:tagsObj, option:this.option, aid:this.$route.params.id})
                     }else{
-                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, tags:tagsObj, option:this.option})
+                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, brief:this.articleForm.brief, tags:tagsObj, option:this.option})
                     }
                     this.getAjax(this.HOST+'/ajax/subArticle',parmas,'POST').then(data=>{
                         Notification({
@@ -143,8 +167,20 @@ export default {
         //获取已有文章详情
         getDetail(){
             this.getAjax(this.HOST+'/ajax/getArticle',{aid:this.$route.params.id, option:this.option},'GET').then(data=>{
+                if(data.res_code==2){
+                    this.btnCtrl = true;
+                    Notification({
+                        type:'error',
+                        message:data.res_msg,
+                        customClass:'hqb-notice',
+                        duration:2000,
+                        offset:300
+                    });
+                    return;
+                }
                 this.articleForm.title=data.articleDetail.title;
                 this.articleForm.text=data.articleDetail.text;
+                this.articleForm.brief=data.articleDetail.brief;
                 this.tags=data.articleDetail.tags?data.articleDetail.tags:[];
             });
         }
@@ -160,6 +196,17 @@ export default {
 
 <style lang="less">
     #publish{
+        .mkd-tips{
+            background: #ccc;
+            margin: 10px;
+            padding-left: 20px;
+            h3{
+                font-size: 20px
+            }
+            b{
+                font-weight: bold;
+            }
+        }
         >h2{
             font-size: 20px;
             font-weight: normal;

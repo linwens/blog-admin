@@ -30,7 +30,7 @@ instance.interceptors.request.use(config => {
 // http响应拦截器
 instance.interceptors.response.use(res => {// 响应成功关闭loading
     loadinginstace.close()
-    if(res.data.res_code == 3||res.data.res_code == 4) {//接口返回错误为登录失效code则返回登录页，否则继续下一步
+    if(res.data.res_code == 3) {//接口返回错误为登录失效code则返回登录页，否则继续下一步
         store.commit('USER_LOGOUT');
         router.replace({
             path: '/login',
@@ -38,7 +38,7 @@ instance.interceptors.response.use(res => {// 响应成功关闭loading
         })
         return Promise.reject(res);
     }
-    if(res.data.res_code != 1) {
+    if(res.data.res_code != 1&&res.data.res_code != 2) {
         Notification.error({
             message: res.data.res_msg,
             customClass:'hqb-notice',

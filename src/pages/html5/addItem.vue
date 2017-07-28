@@ -17,7 +17,7 @@
                 </el-col>
             </el-row>
         </el-form>
-        <el-button type="primary" @click="submitH5" style="margin-left:90px;">确认添加</el-button>
+        <el-button type="primary" @click="submitH5" :disabled="btnCtrl" style="margin-left:90px;">确认添加</el-button>
     </div>
 </template>
 
@@ -28,6 +28,7 @@ export default {
     name: 'addItem',
     data: function(){
         return{
+            btnCtrl:false,
             h5Form:{
                 name:'',
                 desc:''
@@ -82,9 +83,19 @@ export default {
         //获取已有H5详情
         getDetail(){
             this.getAjax(this.HOST+'/ajax/getH5',{hid:this.$route.params.id, option:this.option},'GET').then(data=>{
+                if(data.res_code==2){
+                    this.btnCtrl = true;
+                    Notification({
+                        type:'error',
+                        message:data.res_msg,
+                        customClass:'hqb-notice',
+                        duration:2000,
+                        offset:300
+                    });
+                    return;
+                }
                 this.h5Form.name=data.H5Detail.name;
                 this.h5Form.desc=data.H5Detail.desc;
-
             });
         }
     },

@@ -11,8 +11,8 @@
             <el-row type="flex" justify="center" align="middle" class="m-content">
                 <el-table :data="H5list" stripe>
                     <el-table-column prop="name" label="作品名称" min-width="100" header-align="center" align="center"></el-table-column>
-                    <el-table-column prop="desc" label="作品描述" min-width="200" header-align="center" align="center"></el-table-column>
-                    <el-table-column prop="time" label="作品发布日期" min-width="200" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
+                    <el-table-column prop="desc" label="作品描述" min-width="300" header-align="center" align="center"></el-table-column>
+                    <el-table-column prop="time" label="作品发布日期" min-width="100" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
                     <el-table-column prop="hid" label="操作" min-width="100" header-align="center" align="center">
                         <template scope="tableOp">
                             <el-button size="small" type="primary" @click="goPage('/html5/addItem/'+tableOp.row.hid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
