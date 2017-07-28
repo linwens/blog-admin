@@ -30,7 +30,7 @@ export default {
     methods:{
         getData({curPage=this.page, pageSize=this.pagesize}){
             let params = Object.assign({}, this.schOpt, {curPage:curPage, pageSize:pageSize});
-            this.getAjax(this.ajaxUrl, params,'GET').then(res=>{
+            this.getAjax(this.HOST+this.ajaxUrl, params,'GET').then(res=>{
                 if(res.dataList.length > 0) {
                     this.contents = res.dataList;
                     this.total = res.total;

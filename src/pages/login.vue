@@ -71,7 +71,7 @@ export default {
                         password: this.loginForm.password, 
                         validCode: this.loginForm.validCode
                     };
-                    this.getAjax('/api/ajax/login', datas ,'POST').then( res => {
+                    this.getAjax(this.HOST+'/ajax/login', datas ,'POST').then( res => {
                         //success
                         if(res.res_code === '1') {
                             var data = res.data,

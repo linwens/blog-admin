@@ -21,7 +21,7 @@
                     </el-table-column>
                 </el-table>
             </el-row>
-            <hqbPage :schOpt="schOldval" :ctrlOpt="apiCtrl" :ajaxUrl="'/api/ajax/getList'" @getData="getPageData" ref="hqbPage"></hqbPage>
+            <hqbPage :schOpt="schOldval" :ctrlOpt="apiCtrl" :ajaxUrl="'/ajax/getList'" @getData="getPageData" ref="hqbPage"></hqbPage>
         </el-row>
     </div>
 </template>
