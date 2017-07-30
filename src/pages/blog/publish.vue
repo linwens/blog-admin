@@ -89,7 +89,7 @@ export default {
             articleFormrules:{
                 title:[
                     { required: true, message: '请输入文章标题', trigger: 'blur' },
-                    { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+                    { min: 3, max: 30, message: '长度在 3 到 30 个字符', trigger: 'blur' }
                 ],
                 text:[
                     { required: true, message: '请输入文章正文', trigger: 'blur' }
