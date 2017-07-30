@@ -1,8 +1,8 @@
 <template>
     <div id="imgUp">
         <el-row class="u-title st-el-row">
-            <el-radio v-model="bucketType" label="galleryImg">传至摄影图库</el-radio>
-            <el-radio v-model="bucketType" label="blogImg">传至blog图库</el-radio>
+            <el-radio v-model="bucketType" label="galleryImg" :disabled="typeStatus">传至摄影图库</el-radio>
+            <el-radio v-model="bucketType" label="blogImg" :disabled="typeStatus">传至blog图库</el-radio>
         </el-row>
         <el-row class="u-title st-el-row" v-show="bucketType">
             <span class="u-stitle">图片选择：</span>
@@ -56,6 +56,7 @@ export default {
     data: function(){
         return{
             bucketType:'',
+            typeStatus:false,
             btnCtrl:false,
             dialogImageUrl: '',
             dialogVisible: false,
@@ -90,15 +91,16 @@ export default {
         },
         beforeAvatarUpload(file) {//上传图片校验
             const isJPG = file.type === 'image/jpeg';
+            const isPNG = file.type === 'image/png';
             const isLt2M = file.size / 1024 / 1024 < 2;
 
-            if (!isJPG) {
-              this.$message.error('上传头像图片只能是 JPG 格式!');
+            if (!isJPG&&!isPNG) {
+              this.$message.error('上传d图片只能是 JPG 或 NPG 格式!');
             }
             if (!isLt2M) {
-              this.$message.error('上传头像图片大小不能超过 2MB!');
+              this.$message.error('上传d图片大小不能超过 2MB!');
             }
-            return isJPG && isLt2M;
+            return (isJPG||isPNG) && isLt2M;
         },
         getPicurl(res, file, fileList){//上传成功后
             console.log(JSON.stringify(res)+'||'+JSON.stringify(file)+'||'+JSON.stringify(fileList));
@@ -108,11 +110,9 @@ export default {
             console.log('图片提交成功');
         },
         submitImg(){
-            let parmas = null;
+            let parmas = {title:this.imgForm.title, desc:this.imgForm.desc, exif:this.exif, size:this.size, url:this.url, option:this.option, type:this.bucketType};
             if(this.option == 'modify'){
-                parmas = Object.assign({},{title:this.imgForm.title, desc:this.imgForm.desc, exif:this.exif, size:this.size, url:this.url, option:this.option, gid:this.$route.params.id})
-            }else{
-                parmas = Object.assign({},{title:this.imgForm.title, desc:this.imgForm.desc, exif:this.exif, size:this.size, url:this.url, option:this.option})
+                parmas = Object.assign(parmas,{gid:this.$route.params.id})
             }
             this.$refs['imgForm'].validate((valid) => {
                 if (valid) {
@@ -157,6 +157,8 @@ export default {
                 this.imgForm.desc=data.imgInfo.desc;
                 this.size = data.imgInfo.size;
                 this.exif = data.imgInfo.exif;
+                this.bucketType = data.imgInfo.type;
+                this.typeStatus = true;
                 //图片
                 this.url = data.imgInfo.url;
                 this.imgList.push({"url":data.imgInfo.url})
