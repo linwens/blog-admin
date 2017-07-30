@@ -1,6 +1,10 @@
 <template>
     <div id="imgUp">
         <el-row class="u-title st-el-row">
+            <el-radio v-model="bucketType" label="galleryImg">传至摄影图库</el-radio>
+            <el-radio v-model="bucketType" label="blogImg">传至blog图库</el-radio>
+        </el-row>
+        <el-row class="u-title st-el-row" v-show="bucketType">
             <span class="u-stitle">图片选择：</span>
             <el-upload
                 :action="actionUrl"
@@ -9,6 +13,7 @@
                 :on-remove="handleRemove"
                 :before-upload="beforeAvatarUpload"
                 :on-success="getPicurl"
+                :data="{bucketType:bucketType}"
                 name="imgFiles"
                 :file-list="imgList"
                 class="u-upload">
@@ -50,6 +55,7 @@ export default {
     name: 'imgUp',
     data: function(){
         return{
+            bucketType:'',
             btnCtrl:false,
             dialogImageUrl: '',
             dialogVisible: false,
