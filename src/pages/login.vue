@@ -2,7 +2,7 @@
 <template>
     <div id="login">
         <el-form :model='loginForm' :rules="loginRules" ref="loginForm" label-position="right" class="loginContainer">
-            <h3>欢迎使用华侨宝资产管理系统</h3>
+            <h3>lws后台发布系统</h3>
             <el-form-item prop="username">
                 <i class="iconfont icon-denglu-yonghuming"></i>
                 <el-input type="text" v-model="loginForm.username" placeholder="用户名"></el-input>

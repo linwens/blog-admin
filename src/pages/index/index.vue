@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="customService">
-      <div class="indexImg"><img src="./index.png"></div>
+      <div class="indexImg"><!-- <img src="./index.png"> --></div>
     </div>
   </div>
 </template>
