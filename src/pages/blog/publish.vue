@@ -16,7 +16,7 @@
             </p>
             <p><b>自动连接：</b>用尖括号包裹一个url字符串，如：&lthttp://example.com/>，就会生成一个内容为'http://example.com/'的a标签</p>
             <p><b>技巧：</b></br>
-                &nbsp;&nbsp;&nbsp;1、新窗口打开超链接就直接写HTML标签;
+                &nbsp;&nbsp;&nbsp;1、新窗口打开超链接就直接写HTML标签;链接统一字体颜色：#20A0FF;
                 &nbsp;&nbsp;&nbsp;2、需要自定义样式的就直接写HTML标签;
             </p>
         </div>

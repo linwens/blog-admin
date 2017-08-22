@@ -18,7 +18,7 @@
                 </el-input>
             </el-form-item> -->
             <el-form-item>
-                <el-button type="primary" @click="loginSubmit('loginForm')" class="btn-doLogin">登录</el-button>
+                <el-button type="primary" @click="loginSubmit('loginForm')" class="btn-doLogin" style="margin-top: 60px;">登录</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -104,10 +104,9 @@ export default {
 <style lang='less'>
 #login{
     height: 100%;
-    background-image:url(../assets/images/login/loginBg.jpg),url(../assets/images/login/bgColor.jpg);
-    background-repeat: no-repeat, repeat-x;  
-    background-position: center top, 0 top;
-    background-color: #00d2e9;
+    background: linear-gradient(#0550b5, #00d1ea);
+    background: -webkit-linear-gradient(#0550b5, #00d1ea);
+    background: -moz-linear-gradient(#0550b5, #00d1ea);
     .loginContainer{
         width: 360px;
         height: 480px;
@@ -148,7 +147,7 @@ export default {
             &.btn-doLogin{
                 border-radius: 30px;
                 height: 50px;
-                background-color: #02a5f7;
+                background-color: #0280bf;
                 box-shadow: 0 10px 50px 0 #02a5f7;
                 font-size:20px;
             }
