@@ -39,8 +39,8 @@ export default {
         };
         return{
             loginForm:{
-                username:'linwens',
-                password:'lws5681280!@#',
+                username:'',
+                password:'',
                 validCode:'1234'
             },
             loginRules:{
