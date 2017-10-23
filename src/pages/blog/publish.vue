@@ -53,7 +53,8 @@
             @blur="handleInputConfirm"
         ></el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Tag</el-button>
-        <el-button type="primary" @click="subArticle" :disabled="btnCtrl">发布</el-button>
+        <el-button type="primary" @click="subArticle('save')" :disabled="btnCtrl" >保存</el-button>
+        <el-button type="warning" @click="subArticle('publish')" :disabled="btnCtrl">发布</el-button>
     </div>
 </template>
 
@@ -125,7 +126,7 @@ export default {
             this.inputValue = '';
         },
         //文章发布
-        subArticle(){
+        subArticle(type){//传的字段用于区分保存还是发布
             this.$refs['articleForm'].validate((valid) => {
                 if (valid) {
                     let tagsObj = {};
@@ -136,14 +137,14 @@ export default {
                     }
                     let parmas = null;
                     if(this.option == 'modify'){
-                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, brief:this.articleForm.brief, tags:tagsObj, option:this.option, aid:this.$route.params.id})
+                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, brief:this.articleForm.brief, tags:tagsObj, option:this.option, aid:this.$route.params.id, operate:type})
                     }else{
-                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, brief:this.articleForm.brief, tags:tagsObj, option:this.option})
+                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, brief:this.articleForm.brief, tags:tagsObj, option:this.option, operate:type})
                     }
                     this.getAjax(this.HOST+'/ajax/subArticle',parmas,'POST').then(data=>{
                         Notification({
                             type:'success',
-                            message:'提交成功',
+                            message:data.res_msg,
                             customClass:'hqb-notice',
                             duration:2000,
                             offset:300

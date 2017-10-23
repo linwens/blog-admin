@@ -15,7 +15,9 @@
                     <el-table-column prop="time" label="文章发布日期" min-width="100" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
                     <el-table-column prop="aid" label="操作" min-width="100" header-align="center" align="center">
                         <template scope="tableOp">
-                            <el-button size="small" type="primary" @click="goPage('/blog/publish/'+tableOp.row.aid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
+                            <el-badge :value="(tableOp.row.operate&&tableOp.row.operate==='save')?'未发':''" class="u-badge">
+                                <el-button size="small" type="primary" @click="goPage('/blog/publish/'+tableOp.row.aid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
+                            </el-badge>
                             <el-button size="small" type="danger" @click="handleDelete(tableOp.$index, tableOp.row)"><i class="el-icon-delete2 el-icon--left"></i>删除</el-button>
                         </template>
                     </el-table-column>
@@ -85,7 +87,7 @@ export default {
 </script>
 
 <style lang="less">
-    #onSaleli{
+    #articleList{
         .el-table{
             border:none;
         }
@@ -105,6 +107,15 @@ export default {
         .docOutputbtn{
             float: left;
         }
-        
+        /*角标提示*/
+        .el-table .cell{
+            overflow: visible;
+        }
+        .u-badge{
+            .el-badge__content{
+                right: 80px;
+                background-color: #f7ba2a;
+            }
+        }
     }
 </style>

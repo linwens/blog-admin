@@ -40,10 +40,7 @@ export default {
             return true
         });
     },
-    mounted() {
-        console.log(1);
-        console.log(this.$router);
-    }
+    mounted() {}
 }
 </script>
 
