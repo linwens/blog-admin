@@ -119,7 +119,7 @@ export default {
                     this.getAjax(this.HOST+'/ajax/saveImg',parmas,'POST').then(data=>{
                             Notification({
                                 type:'success',
-                                message:'图片上传成功！',
+                                message:data.res_msg,
                                 customClass:'hqb-notice',
                                 duration:2000,
                                 offset:300

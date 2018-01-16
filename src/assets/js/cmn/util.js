@@ -51,23 +51,9 @@ export const getAjax = (url, params, type)=> {
         instance({
             url: url,
             method: type,
-            params: params
+            data: params
         }).then(res => {resolve(res.data)}).catch(err => {
             // console.log('22222'); console.log(err);
         })
     })
 };
-
-// return instance({
-//         url: url,
-//         method: type,
-//         params: params
-//     }).then(res => res.data).catch(err => console.log(err))
-
-export function _hasVal(obj) {
-    let keys = [];
-    for(let i in obj) {
-        keys.push(obj[obj[i]])
-    }
-    return keys;
-}

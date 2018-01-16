@@ -59,7 +59,7 @@ export default {
                     this.getAjax(this.HOST+'/ajax/subH5',parmas,'POST').then(data=>{
                         Notification({
                             type:'success',
-                            message:'增加成功',
+                            message:data.res_msg,
                             customClass:'hqb-notice',
                             duration:2000,
                             offset:300

@@ -68,7 +68,7 @@ export default {
                 this.getAjax(this.HOST+'/ajax/removeH5',{hid:row.hid},'POST').then(data=>{
                     Notification({
                         type:'success',
-                        message:'文章删除成功',
+                        message:data.res_msg,
                         customClass:'hqb-notice',
                         duration:2000,
                         offset:300
