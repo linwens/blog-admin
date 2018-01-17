@@ -7,25 +7,46 @@
                 </hqbSch>
             </el-col>
         </el-row>
-        <el-row class="borderStyle">
-            <el-row type="flex" justify="center" align="middle" class="m-content">
-                <el-table :data="imgList" stripe>
-                    <el-table-column prop="url" label="图片预览" min-width="100" header-align="center" align="center">
-                        <template scope="scope"><img style="width:140px;height:70px;vertical-align: middle;" :src="scope.row.url" alt=""></template>
-                    </el-table-column>
-                    <el-table-column prop="title" label="图片标题" min-width="150" header-align="center" align="center"></el-table-column>
-                    <el-table-column prop="desc" label="图片介绍" min-width="250" header-align="center" align="center"></el-table-column>
-                    <el-table-column prop="time" label="作品发布日期" min-width="150" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
-                    <el-table-column prop="hid" label="操作" min-width="150" header-align="center" align="center">
-                        <template scope="tableOp">
-                            <el-button size="small" type="primary" @click="goPage('/gallery/upload/'+tableOp.row.gid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
-                            <el-button size="small" type="danger" @click="handleDelete(tableOp.$index, tableOp.row)"><i class="el-icon-delete2 el-icon--left"></i>删除</el-button>
-                        </template>
-                    </el-table-column>
-                </el-table>
-            </el-row>
-            <hqbPage :schOpt="schOldval" :ctrlOpt="apiCtrl" :ajaxUrl="'/ajax/getImglist'" @getData="getPageData" ref="hqbPage"></hqbPage>
-        </el-row>
+        <el-tabs type="border-card" @tab-click="tab_shift">
+            <el-tab-pane label="图片作品">
+                <el-row type="flex" justify="center" align="middle" class="m-content">
+                    <el-table :data="imgList" stripe>
+                        <el-table-column prop="url" label="图片预览" min-width="100" header-align="center" align="center">
+                            <template scope="scope"><img style="width:140px;height:70px;vertical-align: middle;" :src="scope.row.url" alt=""></template>
+                        </el-table-column>
+                        <el-table-column prop="title" label="图片标题" min-width="150" header-align="center" align="center"></el-table-column>
+                        <el-table-column prop="desc" label="图片介绍" min-width="250" header-align="center" align="center"></el-table-column>
+                        <el-table-column prop="time" label="作品发布日期" min-width="150" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
+                        <el-table-column prop="hid" label="操作" min-width="150" header-align="center" align="center">
+                            <template scope="tableOp">
+                                <el-button size="small" type="primary" @click="goPage('/gallery/upload/'+tableOp.row.gid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
+                                <el-button size="small" type="danger" @click="handleDelete(tableOp.$index, tableOp.row)"><i class="el-icon-delete2 el-icon--left"></i>删除</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-row>
+            </el-tab-pane>
+            <el-tab-pane label="blog截图">
+                <el-row type="flex" justify="center" align="middle" class="m-content">
+                    <el-table :data="imgList" stripe>
+                        <el-table-column prop="url" label="图片预览" min-width="100" header-align="center" align="center">
+                            <template scope="scope"><img style="width:140px;height:70px;vertical-align: middle;" :src="scope.row.url" alt=""></template>
+                        </el-table-column>
+                        <el-table-column prop="title" label="图片标题" min-width="150" header-align="center" align="center"></el-table-column>
+                        <el-table-column prop="desc" label="图片介绍" min-width="150" header-align="center" align="center"></el-table-column>
+                        <el-table-column prop="url" label="图片外链" min-width="400" header-align="center" align="center"></el-table-column>
+                        <el-table-column prop="time" label="作品发布日期" min-width="150" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
+                        <el-table-column prop="hid" label="操作" min-width="150" header-align="center" align="center">
+                            <template scope="tableOp">
+                                <el-button size="small" type="primary" @click="goPage('/gallery/upload/'+tableOp.row.gid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
+                                <el-button size="small" type="danger" @click="handleDelete(tableOp.$index, tableOp.row)"><i class="el-icon-delete2 el-icon--left"></i>删除</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-row>
+            </el-tab-pane>
+            <hqbPage :schOpt="schOldval" :dataType="imgType" :ctrlOpt="apiCtrl" :ajaxUrl="'/ajax/getImglist'" @getData="getPageData" ref="hqbPage"></hqbPage>
+        </el-tabs>
     </div>
 </template>
 
@@ -45,7 +66,8 @@ export default {
             schOldval:{//存储旧的搜索参数
                 schWord:''
             },
-            apiCtrl:{}
+            apiCtrl:{},
+            imgType:'galleryImg'
         }
     },
     components:{
@@ -81,6 +103,15 @@ export default {
                     }, 1500);
                 })
             }).catch(err => {});
+        },
+        tab_shift(tab){
+            //搜索条件清除
+            this.schOldval.schWord = this.searchForm.schWord = '';
+            switch(tab.index){
+                case '1': this.imgType='blogImg';
+                    break;
+                default: this.imgType='galleryImg';
+            }
         }
     }
 }

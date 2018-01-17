@@ -25,11 +25,21 @@ export default {
             childApictrl:this.ctrlOpt
         }
     },
-    props: ['schOpt', 'ctrlOpt', 'ajaxUrl'],
+    props: ['schOpt', 'ctrlOpt', 'ajaxUrl', 'dataType'],
     components:{},
+    watch:{
+        dataType:function(val,oldVal){
+            console.log(val);
+            this.dataType = val;
+            //切换回来，到分页的第一页
+            this.page = 1;
+            this.getData(this.page, this.pagesize, this.dataType);
+        }
+    },
     methods:{
-        getData({curPage=this.page, pageSize=this.pagesize}){
-            let params = Object.assign({}, this.schOpt, {curPage:curPage, pageSize:pageSize});
+        getData({curPage=this.page, pageSize=this.pagesize, dataType=this.dataType}){
+            let params = Object.assign({}, this.schOpt, {curPage:curPage, pageSize:pageSize, dataType:dataType});
+            console.log(params);
             this.getAjax(this.HOST+this.ajaxUrl, params,'GET').then(res=>{
                 if(res.dataList.length > 0) {
                     this.contents = res.dataList;
