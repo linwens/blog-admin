@@ -27,7 +27,6 @@
 <script>
 // import '@/assets/less/utils/mixin.less' //引入less
 //import { swiper, swiperSlide } from 'vue-awesome-swiper'  //引入vue插件,或其他组件
-import qs from 'qs'
 export default {
     name: 'login',
     data: function(){
@@ -72,7 +71,7 @@ export default {
                         password: this.loginForm.password, 
                         validCode: this.loginForm.validCode
                     };
-                    this.getAjax(this.HOST+'/ajax/login', qs.stringify(datas) ,'POST').then( res => {
+                    this.getAjax(this.HOST+'/ajax/login', datas ,'POST').then( res => {
                         //success
                         if(res.res_code === '1') {
                             var data = res.data,

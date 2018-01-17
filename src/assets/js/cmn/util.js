@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import instance from '@/http';//导出拦截器中声明的instance
+import qs from 'qs';
 //公共数字转化
 export const numFormat = (num, precision)=> {//字符串加小数点
     var precision = precision || 2;
@@ -51,7 +52,8 @@ export const getAjax = (url, params, type)=> {
         instance({
             url: url,
             method: type,
-            data: params
+            params: type==='GET'?params:'',//GET请求以URL拼接方式传参
+            data: type==='POST'?qs.stringify(params):'' //POST请求以请求体传参
         }).then(res => {resolve(res.data)}).catch(err => {
             // console.log('22222'); console.log(err);
         })

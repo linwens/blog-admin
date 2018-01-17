@@ -137,9 +137,9 @@ export default {
                     }
                     let parmas = null;
                     if(this.option == 'modify'){
-                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, brief:this.articleForm.brief, tags:tagsObj, option:this.option, aid:this.$route.params.id, operate:type})
+                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, brief:this.articleForm.brief, tags:JSON.stringify(tagsObj), option:this.option, aid:this.$route.params.id, operate:type})
                     }else{
-                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, brief:this.articleForm.brief, tags:tagsObj, option:this.option, operate:type})
+                        parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, brief:this.articleForm.brief, tags:JSON.stringify(tagsObj), option:this.option, operate:type})
                     }
                     this.getAjax(this.HOST+'/ajax/subArticle',parmas,'POST').then(data=>{
                         Notification({

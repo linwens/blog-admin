@@ -110,7 +110,7 @@ export default {
             console.log('图片提交成功');
         },
         submitImg(){
-            let parmas = {title:this.imgForm.title, desc:this.imgForm.desc, exif:this.exif, size:this.size, url:this.url, option:this.option, type:this.bucketType};
+            let parmas = {title:this.imgForm.title, desc:this.imgForm.desc, exif:JSON.stringify(this.exif), size:this.size, url:this.url, option:this.option, type:this.bucketType};
             if(this.option == 'modify'){
                 parmas = Object.assign(parmas,{gid:this.$route.params.id})
             }
