@@ -2,14 +2,14 @@ import Vue from 'vue'
 import {USER_LOGIN, USER_LOGOUT} from '../mutations_types'
 
 const user = {
-	state: JSON.parse(sessionStorage.getItem('user')) || '',
+	state: JSON.parse(localStorage.getItem('user')) || '',
 	mutations: {
 		[USER_LOGIN] (state, user) {
-			sessionStorage.setItem('user', JSON.stringify(user))//把前端传过来的值存进sessionStorage的user下
+			localStorage.setItem('user', JSON.stringify(user))//把前端传过来的值存进sessionStorage的user下
 			Object.assign(state, user)//把user这个存储用户数据的对象添加到state里
 		},
 		[USER_LOGOUT] (state) {
-			sessionStorage.removeItem('user')
+			localStorage.removeItem('user')
 			state = ''
 		}
 	},
