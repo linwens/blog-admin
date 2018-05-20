@@ -27,9 +27,9 @@
 </template>
 
 <script>
-import hqbPage from '@/components/loanMag/page';
-import hqbSch from '@/components/loanMag/search';
-import { timeFormat } from '@/assets/js/cmn/util'  //引入vue插件,或其他组件
+import hqbPage from '@/components/page';
+import hqbSch from '@/components/search';
+import { timeFormat } from '@/assets/js/cmn/util'
 import { Notification } from 'element-ui';
 export default {
     name: 'h5list',

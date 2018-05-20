@@ -1,4 +1,3 @@
-<!-- 该项目每个vue文件的代码模板 -->
 <template>
     <div id="sidebar" class="clearfix">
         <el-menu mode="vertical" theme="dark" :default-active="$route.meta.isAction ? $route.meta.isAction : $route.path" unique-opened>

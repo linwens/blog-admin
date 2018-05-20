@@ -25,8 +25,6 @@
 </template>
 
 <script>
-// import '@/assets/less/utils/mixin.less' //引入less
-//import { swiper, swiperSlide } from 'vue-awesome-swiper'  //引入vue插件,或其他组件
 export default {
     name: 'login',
     data: function(){
@@ -71,21 +69,33 @@ export default {
                         password: this.loginForm.password, 
                         validCode: this.loginForm.validCode
                     };
+                    
                     this.getAjax(this.HOST+'/ajax/login', datas ,'POST').then( res => {
+                        var user = {};
                         //success
                         if(res.res_code === '1') {
-                            var data = res.data,
-                                user = {};
+                            var data = res.data;
+
                             for(var key in data){
                                 user[key] = data[key]
                             }
+                            alert(JSON.stringify(user));
                             this.$store.dispatch('USER_LOGIN', user);
                             let redirect = decodeURIComponent(this.$route.query.redirect || '/');
                             this.$router.push({
                                 path: redirect
                             });
                         } else {
-                            this.$message.error('用户名或密码错误');
+                            //this.$message.error('用户名或密码错误');
+                            console.log('进入游客');
+                            user.type = 'guests';
+                            this.$store.dispatch('USER_LOGIN', user);
+                            let redirect = decodeURIComponent(this.$route.query.redirect || '/');
+                            console.log(redirect);
+                            this.$router.push({
+                                path: redirect
+                            });
+                            console.log('进入游客end');
                         }
                     });
                 }else{

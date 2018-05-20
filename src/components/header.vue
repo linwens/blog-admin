@@ -1,8 +1,6 @@
-<!-- 该项目每个vue文件的代码模板 -->
 <template>
   <div id="header">
       <el-col :span="4" class="u-logo">
-          <!-- <img src="../assets/hqb-logo.png" alt="华侨宝logo" style="height: 30px;line-height: 30px;vertical-align: middle;width: 97px;"> -->
       </el-col>
       <el-col :span="20">
           <el-col :span="16">
@@ -18,8 +16,6 @@
 </template>
 
 <script>
-//import '@/assets/........' //引入less
-//import { swiper, swiperSlide } from 'vue-awesome-swiper'  //引入vue插件,或其他组件
 export default {
   name: 'header',
   data: function(){

@@ -12,8 +12,6 @@
 </template>
 
 <script>
-//import '@/assets/........' //引入less
-//import { swiper, swiperSlide } from 'vue-awesome-swiper'  //引入vue插件,或其他组件
 export default {
     name: 'addTags',
     data: function(){

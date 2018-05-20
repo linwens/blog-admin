@@ -17,6 +17,7 @@ export default {//module1,挂载在主页面home上
 	    	},
 	    	meta: {
                 requireAuth: true,
+                roles:[1126]
             }
 	    },
 	    {
@@ -27,6 +28,7 @@ export default {//module1,挂载在主页面home上
 	    	},
 	    	meta: {
                 requireAuth: true,
+                roles:[1126]
             }
 	    }
 	]

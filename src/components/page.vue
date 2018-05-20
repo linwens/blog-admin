@@ -1,4 +1,3 @@
-<!-- 该项目每个vue文件的代码模板 -->
 <template>
     <div id="pagination">
         <el-row type="flex" justify="end" align="middle" class="u-page">

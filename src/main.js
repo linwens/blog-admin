@@ -5,7 +5,6 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
-import * as filters from '@/filters/index'
 import 'element-ui/lib/theme-default/index.css'
 import { getAjax } from '@/assets/js/cmn/util' 
 
@@ -16,10 +15,6 @@ import '@/assets/plugins/iconfont/iconfont.css'
 import '@/assets/plugins/iconfont/iconfont.js'
 
 Vue.prototype.getAjax = getAjax;
-
-Object.keys(filters).forEach(key => {
-    Vue.filter(key, filters[key])
-});
 Vue.prototype.HOST = process.env.NODE_ENV === 'development' ? '/api' : ''
 Vue.use(ElementUI)
 Vue.config.productionTip = false

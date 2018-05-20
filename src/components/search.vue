@@ -1,4 +1,3 @@
-<!-- 该项目每个vue文件的代码模板 -->
 <template>
     <div id="search">
         <el-form :model='searchForm' :rules="searchFormrules" ref="searchForm" label-position="right">
@@ -10,9 +9,6 @@
                     :on-icon-click="search">
                 </el-input>
             </el-form-item>
-            <slot name="seeFailLog">
-                <el-button class="u-seeFlog" @click="goPage('/errlog/curBid')">查看标的还款失败日志</el-button>
-            </slot>
         </el-form>
     </div>
 </template>
