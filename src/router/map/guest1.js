@@ -7,6 +7,10 @@ export default{
 	component:Home,
 	redirect:'/guset1/index',
 	icon: 'iconfont icon-caidanlan-jiekuanguanli',//自定义属性
+	meta: {
+        requireAuth: true,
+        roles:[2]
+    },
 	children:[
 		{
 	    	path: 'index',
@@ -15,6 +19,7 @@ export default{
 	    		page:Index
 	    	},
 	    	meta: {
+	    		requireAuth: true,
                 roles:[2]
             }
 	    }

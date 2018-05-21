@@ -11,15 +11,30 @@
 import {cmnRouterMap, asyncRouterMap} from '@/router';
 import {CONCAT_ROUTERS, ADD_ROUTERS} from '../mutations_types'
 
-function recurRoutes(routes, role){
+function hasThisRole(routes, role){
+	//如果未meta设置roles就认为这个路由是可访问的，无权限限制
 	if(routes.meta&&routes.meta.roles){
-		return routes.meta.roles.some(v=>{
-			v===role //检查meta.roles里有没有存在一个role
-		});
+		//通过some()方法判断meta.roles中是否包含当前role，如果没有就认为没有此路由的访问权限，返回false，路由表中就不存入当前路由。
+		return routes.meta.roles.some(v=>v===role);//检查meta.roles里有没有存在一个role
 	}else{
 		return true;//可能一级{}不存在role,但是其子集存在role
 	}
 };
+//递归routerMap
+function filterRouters(routes,role){
+	//通过filter去过滤动态路由asyncRouterMap，遇到children就做递归，最后返回新的路由表
+	const cacheRoutes = routes.filter(route=>{
+		//当前路由是否插入是通过路由表中设置的meta里存储的roles进行判断，详见hasThisRole方法
+		if(hasThisRole(route,role)){//一级{}有meta且存在role,就存入
+			if(route.children&&route.children.length>0){//一级{}有children继续filter
+				route.children = filterRouters(route.children,role);
+			}
+			return true;
+		}
+		return false;
+	});
+	return cacheRoutes;
+}
 
 const roles = {
 	state:{
@@ -28,8 +43,6 @@ const roles = {
 	},
 	mutations:{
 		[CONCAT_ROUTERS] (state, routes) {
-
-			console.log('update');
 			state.newRouterMap = cmnRouterMap.concat(routes);
 		}
 	},
@@ -43,21 +56,7 @@ const roles = {
 				}else{
 					role = 2;
 				}
-				console.log(role);
-				let accessRoutes = asyncRouterMap.filter(v=>{
-					if(recurRoutes(v,role)){//一级{}有meta且存在role,就存入
-						if(v.children&&v.children.length>0){//一级{}有children继续filter
-							v.children = v.children.filter(c=>{//二级{}有meta且存在role,就存入
-								return recurRoutes(c,role)
-							})
-						}else{
-							console.log('retur true');
-							return true;
-						}
-					}else{
-						return false;
-					}
-				});
+				let accessRoutes = filterRouters(asyncRouterMap,role);
 				commit('CONCAT_ROUTERS',accessRoutes);
 				resolve(state.newRouterMap);
 			});

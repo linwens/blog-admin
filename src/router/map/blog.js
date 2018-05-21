@@ -7,6 +7,10 @@ export default {//module1,挂载在主页面home上
 	component: Home,
 	redirect: '/blog/page', //页面重定向(新增)
 	icon: 'iconfont icon-caidanlan-jiekuanguanli',
+	meta: {
+        requireAuth: true,
+        roles:[1126]
+    },
 	children:[//子模块内容
 		{
 	    	path: 'publish/:id',

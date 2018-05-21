@@ -79,7 +79,6 @@ export default {
                             for(var key in data){
                                 user[key] = data[key]
                             }
-                            alert(JSON.stringify(user));
                             this.$store.dispatch('USER_LOGIN', user);
                             let redirect = decodeURIComponent(this.$route.query.redirect || '/');
                             this.$router.push({
