@@ -38,7 +38,6 @@ function filterRouters(routes,role){
 
 const roles = {
 	state:{
-		curRouterMap:cmnRouterMap,
 		newRouterMap:[]
 	},
 	mutations:{

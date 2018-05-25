@@ -79,7 +79,10 @@ export default {
                             for(var key in data){
                                 user[key] = data[key]
                             }
-                            this.$store.dispatch('USER_LOGIN', user);
+                            this.$store.dispatch('USER_LOGIN', user).then(res=>{
+                                this.$router.options.routes = res;
+                                this.$router.addRoutes(res);
+                            });
                             let redirect = decodeURIComponent(this.$route.query.redirect || '/');
                             this.$router.push({
                                 path: redirect
@@ -88,7 +91,10 @@ export default {
                             //this.$message.error('用户名或密码错误');
                             console.log('进入游客');
                             user.type = 'guests';
-                            this.$store.dispatch('USER_LOGIN', user);
+                            this.$store.dispatch('USER_LOGIN', user).then(res=>{
+                                this.$router.options.routes = res;
+                                this.$router.addRoutes(res);
+                            });
                             let redirect = decodeURIComponent(this.$route.query.redirect || '/');
                             console.log(redirect);
                             this.$router.push({
@@ -103,9 +109,7 @@ export default {
             })
         }
     },
-    mounted () {
-        console.log(this.$store);
-    }
+    mounted () {}
 
 }
 </script>
