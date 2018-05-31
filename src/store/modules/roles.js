@@ -52,7 +52,7 @@ const roles = {
 				let role;
 				if(data.uid){//不改后台，直接判断有没有uid
 					role = 1126;//本来需要后端返回role属性
-				}else{
+				}else if(data.type==='guests'){
 					role = 2;
 				}
 				let accessRoutes = filterRouters(asyncRouterMap,role);

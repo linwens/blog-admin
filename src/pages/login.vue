@@ -37,8 +37,8 @@ export default {
         };
         return{
             loginForm:{
-                username:'',
-                password:'',
+                username:'guests',
+                password:'a12345678',
                 validCode:'1234'
             },
             loginRules:{
@@ -88,19 +88,19 @@ export default {
                                 path: redirect
                             });
                         } else {
-                            //this.$message.error('用户名或密码错误');
-                            console.log('进入游客');
-                            user.type = 'guests';
-                            this.$store.dispatch('USER_LOGIN', user).then(res=>{
-                                this.$router.options.routes = res;
-                                this.$router.addRoutes(res);
-                            });
-                            let redirect = decodeURIComponent(this.$route.query.redirect || '/');
-                            console.log(redirect);
-                            this.$router.push({
-                                path: redirect
-                            });
-                            console.log('进入游客end');
+                            this.$message.error('用户名或密码错误');
+                            // console.log('进入游客');
+                            // user.type = 'guests';
+                            // this.$store.dispatch('USER_LOGIN', user).then(res=>{
+                            //     this.$router.options.routes = res;
+                            //     this.$router.addRoutes(res);
+                            // });
+                            // let redirect = decodeURIComponent(this.$route.query.redirect || '/');
+                            // console.log(redirect);
+                            // this.$router.push({
+                            //     path: redirect
+                            // });
+                            // console.log('进入游客end');
                         }
                     });
                 }else{
@@ -115,57 +115,56 @@ export default {
 </script>
 
 <style lang='less'>
-#login{
-    height: 100%;
-    background: linear-gradient(#0550b5, #00d1ea);
-    background: -webkit-linear-gradient(#0550b5, #00d1ea);
-    background: -moz-linear-gradient(#0550b5, #00d1ea);
-    .loginContainer{
-        width: 360px;
-        height: 480px;
-        background: rgba(255,255,255,0.1);
-        position: absolute;
-        top:265px;
-        left:50%;
-        margin-left: 185px;
-        padding: 0 30px;
-        border-radius: 25px;
-        h3{
-            margin: 30px 0;
-            text-align: center;
-            font-weight: normal;
-            font-size: 20px;
-            color: #fff;
-        }
-        i.iconfont{
+    #login{
+        height: 100%;
+        background: linear-gradient(#0550b5, #00d1ea);
+        background: -webkit-linear-gradient(#0550b5, #00d1ea);
+        background: -moz-linear-gradient(#0550b5, #00d1ea);
+        .loginContainer{
+            width: 360px;
+            height: 480px;
+            background: rgba(255,255,255,0.1);
             position: absolute;
-            top:6px;
-            left:8px;
-            font-size: 27px;
-            color: #fff;
-        }
-        .el-input{
-            width:100%;
-            input{
-                height: 48px;
-                border-radius: 30px;
-                background: rgba(255,255,255,0);
+            top:265px;
+            left:50%;
+            margin-left: 185px;
+            padding: 0 30px;
+            border-radius: 25px;
+            h3{
+                margin: 30px 0;
+                text-align: center;
+                font-weight: normal;
+                font-size: 20px;
                 color: #fff;
-                border: 1px solid #fff;
-                padding-left: 60px;
             }
-        }
-        .el-button{
-            width:100%;
-            &.btn-doLogin{
-                border-radius: 30px;
-                height: 50px;
-                background-color: #0280bf;
-                box-shadow: 0 10px 50px 0 #02a5f7;
-                font-size:20px;
+            i.iconfont{
+                position: absolute;
+                top:6px;
+                left:8px;
+                font-size: 27px;
+                color: #fff;
+            }
+            .el-input{
+                width:100%;
+                input{
+                    height: 48px;
+                    border-radius: 30px;
+                    background: rgba(255,255,255,0);
+                    color: #fff;
+                    border: 1px solid #fff;
+                    padding-left: 60px;
+                }
+            }
+            .el-button{
+                width:100%;
+                &.btn-doLogin{
+                    border-radius: 30px;
+                    height: 50px;
+                    background-color: #0280bf;
+                    box-shadow: 0 10px 50px 0 #02a5f7;
+                    font-size:20px;
+                }
             }
         }
     }
-}
-
 </style>

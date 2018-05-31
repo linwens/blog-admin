@@ -1,9 +1,7 @@
 <template>
-  <div id="app">
-    <!-- 登录入口++主页面带顶部导航 -->
-    <!-- <img src="./assets/logo.png"> -->
-    <router-view></router-view>
-  </div>
+  	<div id="app">
+    	<router-view></router-view>
+  	</div>
 </template>
 
 <script>
