@@ -14,7 +14,7 @@
                     <el-table-column prop="desc" label="作品描述" min-width="300" header-align="center" align="center"></el-table-column>
                     <el-table-column prop="time" label="作品发布日期" min-width="100" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
                     <el-table-column prop="hid" label="操作" min-width="100" header-align="center" align="center">
-                        <template scope="tableOp">
+                        <template slot-scope="tableOp">
                             <el-button size="small" type="primary" @click="goPage('/html5/addItem/'+tableOp.row.hid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
                             <el-button size="small" type="danger" @click="handleDelete(tableOp.$index, tableOp.row)"><i class="el-icon-delete2 el-icon--left"></i>删除</el-button>
                         </template>

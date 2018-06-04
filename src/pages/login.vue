@@ -49,7 +49,7 @@ export default {
                 password:[
                     { required:true, message:'请输入密码', trigger:'blur'},
                     { min: 8, max: 16, message: '长度在 8 到 16 个字符', trigger: 'blur' },
-                    { pattern :/^[a-zA-Z0-9]+$/+/((?=[\x21-\x7e]+)[^A-Za-z0-9])/, message: '密码格式错误', trigger: 'blur' }//匹配数字字母和特殊符号
+                    { pattern : /^(?![a-zA-z]+$)(?!\d+$)(?![!@#$%^&*]+$)[a-zA-Z\d!@#$%^&*]+$/, message: '密码格式错误', trigger: 'blur' }//匹配数字字母和特殊符号
                 ],
                 validCode:[
                     { required:true, message:'请输入验证码', trigger: 'blur'},

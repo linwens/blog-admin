@@ -1,11 +1,11 @@
 const Home = resolve => require(['@/pages/home'], resolve);
-const Index = resolve => require(['@/pages/guest1/index'], resolve);
+const Index = resolve => require(['@/pages/vChart/index'], resolve);
 
 export default{
-	path:'/guest1',
-	name:'guest1',
+	path:'/vChart',
+	name:'vChart',
 	component:Home,
-	redirect:'/guset1/index',
+	redirect:'/vChart/index',
 	icon: 'iconfont icon-caidanlan-jiekuanguanli',//自定义属性
 	meta: {
         requireAuth: true,
@@ -14,7 +14,7 @@ export default{
 	children:[
 		{
 	    	path: 'index',
-	    	name: '游客1首页',
+	    	name: 'vue-chart图表',
 	    	components: {
 	    		page:Index
 	    	},

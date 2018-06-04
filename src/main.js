@@ -5,7 +5,8 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
+//import 'element-ui/lib/theme-default/index.css'
+import 'element-ui/lib/theme-chalk/index.css';//elementui2.4.0 改下路径
 import { getAjax } from '@/assets/js/cmn/util' 
 
 //全局引入静态资源

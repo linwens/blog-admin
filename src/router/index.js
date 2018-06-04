@@ -7,7 +7,8 @@ import Router from 'vue-router'
 import blog from '@/router/map/blog'
 import html5 from '@/router/map/html5'
 import gallery from '@/router/map/gallery'
-import guest1 from '@/router/map/guest1'
+import guests from '@/router/map/guests'
+import vChart from '@/router/map/vChart'
 const Home = resolve => require(['@/pages/home'], resolve);
 const Login = resolve => require(['@/pages/login'], resolve);
 const Unfind = resolve => require(['@/pages/unfind'], resolve);
@@ -104,7 +105,8 @@ export const cmnRouterMap = [
 ];
 
 export const asyncRouterMap = [
-    guest1,
+    guests,
+    vChart,
     blog,
     html5,
     gallery,

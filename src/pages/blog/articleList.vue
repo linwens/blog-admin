@@ -14,7 +14,7 @@
                     <el-table-column prop="brief" label="文章简介" min-width="300" header-align="center" align="center"></el-table-column>
                     <el-table-column prop="time" label="文章发布日期" min-width="100" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
                     <el-table-column prop="aid" label="操作" min-width="100" header-align="center" align="center">
-                        <template scope="tableOp">
+                        <template slot-scope="tableOp">
                             <el-badge :value="(tableOp.row.operate&&tableOp.row.operate==='save')?'未发':''" class="u-badge">
                                 <el-button size="small" type="primary" @click="goPage('/blog/publish/'+tableOp.row.aid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
                             </el-badge>

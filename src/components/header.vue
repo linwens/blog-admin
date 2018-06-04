@@ -1,15 +1,24 @@
 <template>
-  <div id="header">
+  <div id="v-header">
       <el-col :span="4" class="u-logo">
       </el-col>
       <el-col :span="20">
           <el-col :span="16">
-              <h2>linwens的后台系统</h2>
+              <h2>博客后台系统</h2>
           </el-col>
           <el-col :span="8" class="u-userInfo">
-              <i class="iconfont icon-dingbulan-wo"></i>
-              <span>linwens</span>
-              <el-button type="text" @click="logout"><i class="iconfont icon-dingbulan-zhuxiao"></i></el-button>
+                <el-dropdown class="u-userName" trigger="click" placement="bottom">
+                    <span class="el-dropdown-link">
+                        {{nickName}}<i class="el-icon-caret-bottom"></i>
+                    </span>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item>关于作者</el-dropdown-item>
+                        <el-dropdown-item divided><p @click="logout">退出登录</p></el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
+                <div class="u-userAvator">
+                    <img :src="avatorPic" alt="用户头像">
+                </div>
           </el-col>
       </el-col>
   </div>
@@ -17,11 +26,32 @@
 
 <script>
 export default {
-  name: 'header',
+  name: 'v-header',
   data: function(){
     return{
-
+        avatorImg:'',
+        userType:this.$store.state.user.type
     }
+  },
+  computed:{
+      nickName(){
+        let nn = '';
+        if(this.userType==='guests'){
+          nn = 'admin';
+        }else{
+          nn = '努力的小林';
+        }
+        return nn;
+      },
+      avatorPic(){
+        let ap = '';
+        if(this.userType==='guests'){
+          ap = 'http://otvt0q8hg.bkt.clouddn.com/smile.png';
+        }else{
+          ap = 'http://osurqoqxj.bkt.clouddn.com/IMG_4106.jpg';
+        }
+        return ap;
+      }
   },
   components:{},
   methods:{
@@ -38,7 +68,7 @@ export default {
 </script>
 
 <style lang="less">
-#header{
+#v-header{
     position: fixed;
     top:0;
     left:0;
@@ -71,18 +101,33 @@ export default {
       }
       .icon-dingbulan-wo{
         margin-right: 5px;
-      }
-      .icon-dingbulan-wo, .icon-dingbulan-zhuxiao{
         font-size: 22px;
         color: #fff;
       }
     }
     .u-userAvator{
-      width: 30px;
-      height: 30px;
+        float: right;
+      width: 40px;
+      height: 40px;
       vertical-align: middle;
-      border-radius: 150px;
-      margin-right: 10px;
+      border-radius: 10px;
+      margin: 10px 10px 0 0;
+      overflow: hidden;
+      img{
+        width: 100%;
+      }
+    }
+    .u-userName{
+        float: right;
+        margin-right: 20px;
+        color: #fff;
+        .el-icon-caret-bottom{
+            margin-left: 5px;
+            font-size: 12px;
+        }
+        .el-popper[x-placement^=bottom]{
+            margin-top: -14px;
+        }
     }
     button{
       margin:0 32px 0 28px;
