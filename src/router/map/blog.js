@@ -6,7 +6,7 @@ export default {//module1,挂载在主页面home上
 	name: 'blog',
 	component: Home,
 	redirect: '/blog/page', //页面重定向(新增)
-	icon: 'iconfont icon-caidanlan-jiekuanguanli',
+	icon: 'iconfont icon-bokexinwen',
 	meta: {
         requireAuth: true,
         roles:[1126]

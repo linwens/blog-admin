@@ -7,7 +7,7 @@ export default {//module1,挂载在主页面home上
 	name: 'gallery',
 	component: Home,
 	redirect: '/gallery/page', //页面重定向(新增)
-	icon: 'iconfont icon-caidanlan-jiekuanguanli',
+	icon: 'iconfont icon-i-img',
 	meta: {
         requireAuth: true,
         roles:[1126]

@@ -7,7 +7,7 @@ export default {//module1,挂载在主页面home上
 	name: 'html5',
 	component: Home,
 	redirect: '/html5/page', //页面重定向(新增)
-	icon: 'iconfont icon-caidanlan-jiekuanguanli',
+	icon: 'iconfont icon-html5',
 	meta: {
         requireAuth: true,
         roles:[1126]

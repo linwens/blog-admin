@@ -6,7 +6,7 @@ export default{
 	name:'vChart',
 	component:Home,
 	redirect:'/vChart/index',
-	icon: 'iconfont icon-caidanlan-jiekuanguanli',//自定义属性
+	icon: 'iconfont icon-areachart',//自定义属性
 	meta: {
         requireAuth: true,
         roles:[2]

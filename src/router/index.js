@@ -14,57 +14,7 @@ const Login = resolve => require(['@/pages/login'], resolve);
 const Unfind = resolve => require(['@/pages/unfind'], resolve);
 const Index = resolve => require(['@/pages/index/index'], resolve);
 
-Vue.use(Router)
-/*
-const router = new Router({
-    routes: [
-        {//一级目录只有首页及入口页面
-            path: '/',
-            name: '首页',
-            component: Home,
-            meta: {
-                requireAuth: true,
-            },
-            noDropdown: true,
-            icon: 'iconfont icon-caidanlan-shouye',
-            redirect:'/index',
-            children:[//子模块内容
-                {
-                    path: '/index',
-                    components: {
-                        page: Index
-                    },
-                    meta: {
-                        requireAuth: true,
-                        isAction: ''
-                    },
-                    hidden: true,
-                }
-            ]
-        },
-        {//404路由
-            path: '/404',
-            name: 'unfind',
-            component: Unfind,
-            hidden: true,  //是否在左侧列表显示
-        },
-        {//入口路由
-            path: '/login',
-            name: '登录页',
-            component: Login,
-            hidden: true,
-        },
-        blog,
-        html5,
-        gallery,
-        {
-            path: '*',//如果路由不匹配跳转到404,注意要放在最后面
-            hidden: true,
-            redirect: { path: '/404' }
-        }
-    ]
-});
-*/
+Vue.use(Router);
 export const cmnRouterMap = [
     {//一级目录只有首页及入口页面
         path: '/',
@@ -129,9 +79,9 @@ if (store.state.user.uid||store.state.user.type==='guests') {
         router.replace({path: lcHash.substr(1,lcHash.length-1)});//替换当前url，实现刷新
     });
 }
+
 router.beforeEach((to, from, next) => {
     if (to.meta.requireAuth) {
-        console.log('requireAuth');
         if (store.state.user.uid||store.state.user.type==='guests') {
             next();
         } else {
