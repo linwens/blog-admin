@@ -21,7 +21,7 @@
 	</div>
 </template>
 <script>
-	import sidebar from '@/components/sidebar';
+	import sidebar from '@/components/sidebar2';
 	import header from '@/components/header';
 	import breadcrumb from '@/components/breadcrumb';
 	export default {
