@@ -23,6 +23,7 @@ export const cmnRouterMap = [
         meta: {
             requireAuth: true,
         },
+        hidden: true,//直接隐藏
         noDropdown: true,
         icon: 'iconfont icon-caidanlan-shouye',
         redirect:'/index',
@@ -60,6 +61,17 @@ export const asyncRouterMap = [
     blog,
     html5,
     gallery,
+    {//404路由
+        path: '/404',
+        name: '404页面',
+        component: Unfind,
+        noDropdown: true,
+        icon: 'iconfont icon-msnui-forbid',
+        meta:{
+            requireAuth: true,
+            role:[2]
+        }
+    },
     {
         path: '*',//如果路由不匹配跳转到404,注意要放在最后面
         hidden: true,

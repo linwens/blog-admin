@@ -14,11 +14,13 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "chart.js": "^2.7.2",
     "element-ui": "^2.4.0",
     "less": "^2.7.2",
     "less-loader": "^4.0.4",
     "sortablejs": "^1.7.0",
     "vue": "^2.5.2",
+    "vue-chartjs": "^3.3.1",
     "vue-router": "^2.3.1",
     "vuedraggable": "^2.16.0",
     "vuex": "^2.3.1"
