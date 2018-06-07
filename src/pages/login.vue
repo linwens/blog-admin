@@ -69,44 +69,51 @@ export default {
                         password: this.loginForm.password, 
                         validCode: this.loginForm.validCode
                     };
-                    
-                    this.getAjax(this.HOST+'/ajax/login', datas ,'POST').then( res => {
-                        var user = {};
-                        //success
-                        if(res.res_code === '1') {
-                            var data = res.data;
-
-                            for(var key in data){
-                                user[key] = data[key]
-                            }
-                            this.$store.dispatch('USER_LOGIN', user).then(res=>{
-                                this.$router.options.routes = res;
-                                this.$router.addRoutes(res);
-                            });
-                            let redirect = decodeURIComponent(this.$route.query.redirect || '/');
-                            this.$router.push({
-                                path: redirect
-                            });
-                        } else {
-                            this.$message.error('用户名或密码错误');
-                            // console.log('进入游客');
-                            // user.type = 'guests';
-                            // this.$store.dispatch('USER_LOGIN', user).then(res=>{
-                            //     this.$router.options.routes = res;
-                            //     this.$router.addRoutes(res);
-                            // });
-                            // let redirect = decodeURIComponent(this.$route.query.redirect || '/');
-                            // console.log(redirect);
-                            // this.$router.push({
-                            //     path: redirect
-                            // });
-                            // console.log('进入游客end');
+                    //如果是游客不发请求
+                    if(this.loginForm.username==='guests'){
+                        console.log('游客进来了');
+                        let guests = {
+                            type:'guests'
                         }
-                    });
+                        this.dispatchUser(guests);
+                    }else{
+                        this.getAjax(this.HOST+'/ajax/login', datas ,'POST').then( res => {
+                            let user = {};
+                            //success
+                            if(res.res_code === '1') {
+                                var data = res.data;
+
+                                for(var key in data){
+                                    user[key] = data[key]
+                                }
+                                this.dispatchUser(user);
+                                // this.$store.dispatch('USER_LOGIN', user).then(res=>{
+                                //     this.$router.options.routes = res;
+                                //     this.$router.addRoutes(res);
+                                // });
+                                // let redirect = decodeURIComponent(this.$route.query.redirect || '/index');
+                                // this.$router.push({
+                                //     path: redirect
+                                // });
+                            } else {
+                                this.$message.error('用户名或密码错误');
+                            }
+                        });
+                    }
                 }else{
                     return;
                 }
             })
+        },
+        dispatchUser(data){
+            this.$store.dispatch('USER_LOGIN', data).then(res=>{
+                this.$router.options.routes = res;
+                this.$router.addRoutes(res);
+            });
+            let redirect = decodeURIComponent(this.$route.query.redirect || '/index');
+            this.$router.push({
+                path: redirect
+            });
         }
     },
     mounted () {}

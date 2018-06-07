@@ -29,7 +29,7 @@ export default {
       if(type==='back'){
         this.$router.back();
       }else if(type==='home'){
-        this.$router.push('guests/index');
+        this.$router.push('/index');
       }
     }
   },

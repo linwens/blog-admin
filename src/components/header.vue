@@ -59,7 +59,7 @@ export default {
       this.$store.dispatch('USER_LOGOUT')
       //退出跳转到登录页
       window.location.reload();
-      this.$router.replace({ path: '/login' })
+      //this.$router.replace({ path: '/login' })
     },
   },
   mounted () {}

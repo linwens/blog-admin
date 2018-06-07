@@ -10,7 +10,7 @@ const user = {
 		},
 		[USER_LOGOUT] (state) {
 			localStorage.removeItem('userdata')
-			state = ''
+			state = null
 		}
 	},
 	actions: {

@@ -4,7 +4,7 @@
 			<v-header></v-header>
 		</el-row>
 		<el-row>
-			<el-col :span="4" style="position: fixed;top:60px;left:0;height: 100%;background-color:#1f2d3d;">
+			<el-col :span="4" style="position: fixed;top:60px;left:0;height: 100%;" :style="{backgroundColor:'#1e90ff'}">
 				<v-sidebar></v-sidebar>
 			</el-col>
 			<el-col :span="20" style="margin-left:16.66667%;">
@@ -21,7 +21,7 @@
 	</div>
 </template>
 <script>
-	import sidebar from '@/components/sidebar2';
+	import sidebar from '@/components/sidebar';
 	import header from '@/components/header';
 	import breadcrumb from '@/components/breadcrumb';
 	export default {

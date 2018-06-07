@@ -42,12 +42,11 @@ const roles = {
 	},
 	mutations:{
 		[CONCAT_ROUTERS] (state, routes) {
-			state.newRouterMap = cmnRouterMap.concat(routes);
+			state.newRouterMap = routes;
 		}
 	},
 	actions: {
 		[ADD_ROUTERS] ({commit,state},data) {
-			console.log('进入role.js-----ADD_ROUTERS');
 			return new Promise((resolve, reject)=>{
 				let role;
 				if(data.uid){//不改后台，直接判断有没有uid

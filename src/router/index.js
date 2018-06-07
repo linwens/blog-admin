@@ -2,45 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import store from '../store'
 import Router from 'vue-router'
-/*页面引入及路由编写，请用路由嵌套存放子页面*/
-
-import blog from '@/router/map/blog'
-import html5 from '@/router/map/html5'
-import gallery from '@/router/map/gallery'
-import guests from '@/router/map/guests'
-import vChart from '@/router/map/vChart'
-const Home = resolve => require(['@/pages/home'], resolve);
+/*------引入页面组件------*/
+import {Admin_index, Blog, Html5, Gallery} from '@/router/map/admin'
+import {Guests_index, Guests, VChart, G_unfind} from '@/router/map/guests'
 const Login = resolve => require(['@/pages/login'], resolve);
 const Unfind = resolve => require(['@/pages/unfind'], resolve);
-const Index = resolve => require(['@/pages/index/index'], resolve);
-
 Vue.use(Router);
+//公共路由
 export const cmnRouterMap = [
-    {//一级目录只有首页及入口页面
-        path: '/',
-        name: '首页',
-        component: Home,
-        meta: {
-            requireAuth: true,
-        },
-        hidden: true,//直接隐藏
-        noDropdown: true,
-        icon: 'iconfont icon-caidanlan-shouye',
-        redirect:'/index',
-        children:[//子模块内容
-            {
-                path: '/index',
-                components: {
-                    page: Index
-                },
-                meta: {
-                    requireAuth: true,
-                    isAction: ''
-                },
-                hidden: true,
-            }
-        ]
-    },
     {//404路由
         path: '/404',
         name: 'unfind',
@@ -56,29 +25,20 @@ export const cmnRouterMap = [
 ];
 
 export const asyncRouterMap = [
-    guests,
-    vChart,
-    blog,
-    html5,
-    gallery,
-    {//404路由
-        path: '/404',
-        name: '404页面',
-        component: Unfind,
-        noDropdown: true,
-        icon: 'iconfont icon-msnui-forbid',
-        meta:{
-            requireAuth: true,
-            role:[2]
-        }
-    },
+    Admin_index,//我的主页
+    Guests_index,//游客主页
+    Guests,//游客栏
+    VChart,//游客图表
+    Blog,//我的博客
+    Html5,//我的H5
+    Gallery,//我的照片
+    G_unfind,//游客404
     {
         path: '*',//如果路由不匹配跳转到404,注意要放在最后面
         hidden: true,
         redirect: { path: '/404' }
     }
 ];
-
 const router = new Router({
     routes:cmnRouterMap
 });
@@ -87,13 +47,15 @@ if (store.state.user.uid||store.state.user.type==='guests') {
     store.dispatch('ADD_ROUTERS',store.state.user).then(res=>{
         var lcHash = window.location.hash;
         router.options.routes = res;
+        console.log('-------1------');
         router.addRoutes(res);
+        console.log('-------2------');
         router.replace({path: lcHash.substr(1,lcHash.length-1)});//替换当前url，实现刷新
     });
 }
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.requireAuth) {
+    if (to.meta.requireAuth||!to.name) {//动态路由还没生成，to.name=null
         if (store.state.user.uid||store.state.user.type==='guests') {
             next();
         } else {
