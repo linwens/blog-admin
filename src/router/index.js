@@ -47,9 +47,7 @@ if (store.state.user.uid||store.state.user.type==='guests') {
     store.dispatch('ADD_ROUTERS',store.state.user).then(res=>{
         var lcHash = window.location.hash;
         router.options.routes = res;
-        console.log('-------1------');
         router.addRoutes(res);
-        console.log('-------2------');
         router.replace({path: lcHash.substr(1,lcHash.length-1)});//替换当前url，实现刷新
     });
 }

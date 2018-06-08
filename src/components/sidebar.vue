@@ -8,6 +8,7 @@
 			:collapse="isCollapse"
 			:unique-opened="isUnique"
 			:router="true"
+			class="el-menu-vertical-demo"
 		>
 			<template v-for="(menu,index) in routeArray"><!-- 把for循环从el-menu中拿出来放入template里，不然unique-opened不会生效 -->
 				<el-submenu v-if="isSubmenu(menu)" :index="menu.path" :key="index">
@@ -21,7 +22,7 @@
 				</el-submenu>
 				<el-menu-item v-else-if="!menu.hidden" :index="menu.path" :key="index">
 					<i :class="menu.icon"></i>
-					{{menu.name}}
+					<span>{{menu.name}}</span>
 				</el-menu-item>
 			</template>
 		</el-menu>
@@ -34,8 +35,12 @@
 		data:function(){
 			return {
 				routeArray:[],
-				isCollapse:false,
 				isUnique:true
+			}
+		},
+		computed:{
+			isCollapse(){
+				return this.$store.state.theme.sideBarCol;
 			}
 		},
 		methods:{
@@ -84,6 +89,14 @@
 			&:hover,&.is-active{
 				border-width: 4px;
 			}
+		}
+		/*collapse*/
+		.el-menu--collapse{
+
+		}
+		.el-menu-vertical-demo:not(.el-menu--collapse) {
+		    width: 100%;
+		    min-height: 400px;
 		}
 	}
 </style>

@@ -4,10 +4,10 @@
 			<v-header></v-header>
 		</el-row>
 		<el-row>
-			<el-col :span="4" style="position: fixed;top:60px;left:0;height: 100%;" :style="{backgroundColor:'#1e90ff'}">
+			<el-col :span="toggleBar?1:4" :style="{backgroundColor:'#1e90ff'}" class="sidebar-container" :class="{toggleBar:toggleBar}">
 				<v-sidebar></v-sidebar>
 			</el-col>
-			<el-col :span="20" style="margin-left:16.66667%;">
+			<el-col :span="toggleBar?23:20" :class="[sMainBox, toggleBar?sBig:'']">
 				<v-breadcrumb></v-breadcrumb>
 				<el-col :span="24">
 					<transition>
@@ -28,7 +28,14 @@
 		name:'home',
 		data:function(){
 			return{
-				
+				// toggleBar:this.$store.state.theme.sideBarCol
+				sMainBox:'s-mainBox',
+				sBig:'s-big'
+			}
+		},
+		computed:{
+			toggleBar(){
+				return this.$store.state.theme.sideBarCol
 			}
 		},
 		components:{
@@ -44,5 +51,23 @@
 	}
 </script>
 <style lang="less">
-
+	#home{
+		.sidebar-container{
+			position: fixed;
+			top:70px;
+			left:0;
+			height: 100%;
+			transition: all 0.3s linear;
+			&.toggleBar{
+				width: 64px;
+			}
+		}
+		.s-mainBox{
+			margin-left: 16.66667%;
+			transition: all 0.3s linear;
+			&.s-big{
+				margin-left: 64px;
+			}
+		}
+	}
 </style>

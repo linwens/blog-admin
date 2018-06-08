@@ -242,8 +242,7 @@
         methods:{
             toggleSidebar (val){//参数就是新值
                 //参考NavMenu导航菜单
-                console.log(val);
-                console.log('开关控制左侧边栏');
+                this.$store.dispatch('BAR_SWITCH');
             }
         }
     }

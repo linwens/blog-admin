@@ -1,8 +1,7 @@
 <template>
   <div id="v-header">
-      <el-col :span="4" class="u-logo">
-      </el-col>
-      <el-col :span="20">
+      
+      <el-col :span="24">
           <el-col :span="16">
               <h2>博客后台系统</h2>
           </el-col>
@@ -73,23 +72,23 @@ export default {
     top:0;
     left:0;
     width: 100%;
-    height: 60px;
-    line-height: 60px;
+    height: 70px;
+    line-height: 70px;
     color: #ccc;
     background: #03A9F4;
     z-index: 9;
     .u-logo{
-      height: 60px;
-      line-height: 60px;
+      height: 70px;
+      line-height: 70px;
       text-align: center;
       overflow: hidden;
     }
     h2{
       display: inline-block;
-      line-height: 30px;
+      height: 70px;
+      line-height: 70px;
       padding-left: 10px;
-      border-left: 2px solid #fff;
-      font-size: 20px;
+      font-size: 26px;
       font-weight: normal;
       color: #fff;
     }
@@ -110,8 +109,8 @@ export default {
       width: 40px;
       height: 40px;
       vertical-align: middle;
-      border-radius: 10px;
-      margin: 10px 10px 0 0;
+      border-radius: 30px;
+      margin: 15px 10px 0 0;
       overflow: hidden;
       img{
         width: 100%;
