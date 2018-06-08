@@ -3,7 +3,7 @@
 		<el-row style="height:60px;">
 			<v-header></v-header>
 		</el-row>
-		<el-row>
+		<el-row style="background-color:#eee;"><!-- 这里可以设置整个背景色 -->
 			<el-col :span="toggleBar?1:4" :style="{backgroundColor:'#1e90ff'}" class="sidebar-container" :class="{toggleBar:toggleBar}">
 				<v-sidebar></v-sidebar>
 			</el-col>

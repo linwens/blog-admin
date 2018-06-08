@@ -2,7 +2,8 @@ import {BAR_SWITCH} from '../mutations_types'
 
 const theme = {
 	state:{
-		sideBarCol:false
+		sideBarCol:false,//侧边栏收缩开关
+		themeColor:'default',//网站主题
 	},
 	mutations:{
 		[BAR_SWITCH](state){
