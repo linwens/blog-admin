@@ -1,18 +1,17 @@
 <template>
     <div id="Guest_table">
-        这里是基础数据表格页,我希望放的东西有：
-        <p>1、常规表格列表（表头，分页，筛选工具栏）</p>
-        <p>2、弹窗操作</p>
-        <p>3、信息提示</p>
-        <p>4、跳转文章编辑</p>
-        <p>5、筛选工具栏：关键字搜索，排序，批量操作，</p>
-        <p>6、tab切换，使用keep-live</p>
+        <!-- 这里是基础数据表格页,我希望放的东西有：
+        1、常规表格列表（表头，分页，筛选工具栏）
+        2、弹窗操作
+        3、信息提示
+        4、跳转文章编辑
+        5、筛选工具栏：关键字搜索，排序，批量操作，
+        6、tab切换，使用keep-live -->
         <el-card>
             <el-tabs tab-position="left">
                 <el-tab-pane label="文章列表">
                     <el-row>
                         <el-col :span="24">
-                            <el-checkbox v-model="checked" border>批量选择</el-checkbox>
                             <el-select v-model="sequence" placeholder="排序方式">
                                 <el-option
                                     v-for="item in options"
@@ -36,8 +35,8 @@
                             <el-table-column type="selection" min-width="20" header-align="center" align="center"></el-table-column>
                             <el-table-column prop="title" label="文章标题" min-width="100" header-align="center" align="center"></el-table-column>
                             <el-table-column prop="brief" label="文章简介" min-width="300" header-align="center" align="center"></el-table-column>
-                            <el-table-column prop="time" label="文章发布日期" min-width="100" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
-                            <el-table-column prop="aid" label="操作" min-width="100" header-align="center" align="center">
+                            <el-table-column prop="time" label="文章发布日期" min-width="80" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
+                            <el-table-column prop="aid" label="操作" min-width="80" header-align="center" align="center">
                                 <template slot-scope="tableOp">
                                     <el-badge :value="(tableOp.row.operate&&tableOp.row.operate==='save')?'未发':''" class="u-badge">
                                         <el-button size="small" type="primary" @click="goPage('/blog/publish/'+tableOp.row.aid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
@@ -51,11 +50,12 @@
                         <el-pagination
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
-                            :current-page="currentPage4"
+                            :current-page="curPage"
                             :page-sizes="[5, 10, 20]"
-                            :page-size="10"
+                            :page-size="pagesize"
                             layout="total, sizes, prev, pager, next, jumper"
-                            :total="60"
+                            :total="articleList.length"
+                            background
                         >
                         </el-pagination>
                     </el-row>
@@ -63,12 +63,16 @@
                 <el-tab-pane label="已删除文章">
                     <el-row>
                         <el-table :data="delList" class="m-el-table" :show-header="false">
-                            <el-table-column type="expand" min-width="20" header-align="center" align="center"></el-table-column>
+                            <el-table-column type="expand" min-width="20" header-align="center" align="center">
+                                <template slot-scope="props">
+                                    {{ props.row.brief }}
+                                </template>
+                            </el-table-column>
                             <el-table-column prop="title" min-width="500" header-align="center" align="left"></el-table-column>
                             <el-table-column prop="time" min-width="100" header-align="center" align="center" :formatter="timeFormat"></el-table-column>
                             <el-table-column prop="aid" min-width="50" header-align="center" align="center">
                                 <template slot-scope="tableOp">
-                                    <el-button size="small" type="danger" @click="handleDelete(tableOp.$index, tableOp.row)"><i class="el-icon-delete2 el-icon--left"></i>还原</el-button>
+                                    <el-button plain size="small" type="success" @click="handleRestore(tableOp.$index, tableOp.row)"><i class="el-icon-delete2 el-icon--left"></i>还原</el-button>
                                 </template>
                             </el-table-column>
                         </el-table>
@@ -77,11 +81,11 @@
                         <el-pagination
                             @size-change="handleSizeChange"
                             @current-change="handleCurrentChange"
-                            :current-page="currentPage4"
+                            :current-page="delCurPage"
                             :page-sizes="[5, 10, 20]"
-                            :page-size="10"
+                            :page-size="delPagesize"
                             layout="total, sizes, prev, pager, next, jumper"
-                            :total="60"
+                            :total="delArtlist.length"
                         >
                         </el-pagination>
                     </el-row>
@@ -103,99 +107,16 @@
                 searchForm:{
                     schWord:''
                 },
-                artList: [
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'save',
-                    },
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'save',
-                    },
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'save',
-                    },
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'public',
-                    },
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'save',
-                    },
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'save',
-                    },
-                ],
-                delList:[
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'save',
-                    },
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'save',
-                    },
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'save',
-                    },
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'public',
-                    },
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'save',
-                    },
-                    {
-                        title:'文章标题',
-                        brief:'文章简介',
-                        time:1528448796,
-                        aid:'001',
-                        operate:'save',
-                    },
-                ],
+                artList: [],
+                delList:[],
                 schOldval:{//存储旧的搜索参数
                     schWord:''
                 },
                 apiCtrl:{},
-                currentPage4: 4,
+                curPage: 1,
+                pagesize:5,
+                delCurPage:1,
+                delPagesize:5,
                 options: [{
                   value: '1',
                   label: '发布时间由近到远'
@@ -213,12 +134,29 @@
             hqbPage,
             hqbSch
         },
+        computed:{
+            articleList(){
+                return this.$store.state.mockdatas.articleList;
+            },
+            delArtlist(){
+                return this.$store.state.mockdatas.delArtlist;
+            }
+        },
+        watch:{
+            articleList(){
+                console.log('watch监听articleList');
+                //this.artList = this.$store.state.mockdatas.articleList;
+                this.getData({type:'artList'});
+            },
+            delArtlist(){
+                console.log('watch监听delArtlist');
+                //this.delList = this.$store.state.mockdatas.delArtlist;
+                this.getData({curPage:this.delCurPage, pageSize:this.delPagesize,type:'delList'});
+            }
+        },
         methods: {
             goPage(val){//跳转
                 this.$router.push({path:val})
-            },
-            getPageData(rslt){
-                this.artList = rslt;
             },
             timeFormat(row, column){//时间戳转化
                 return timeFormat(row[column.property])
@@ -230,26 +168,36 @@
                     cancelButtonText: '取消',
                     type: 'warning'
                 }).then(() => {
-                    this.getAjax(this.HOST+'/ajax/removeArticle',{aid:row.aid},'POST').then(data=>{
-                        Notification({
-                            type:'success',
-                            message:'文章删除成功',
-                            customClass:'hqb-notice',
-                            duration:2000,
-                            offset:300
-                        });
-                        setTimeout(()=>{
-                            this.$refs.hqbPage.getData({});
-                        }, 1500);
-                    })
+                    let place = (this.curPage-1)*this.pagesize+index;
+                    this.$store.dispatch('DEL_ARTICLE',place);
                 }).catch(err => {});
+            },
+            handleRestore(index, row){
+                console.log('进入还原');
+                this.$store.dispatch('RESTORE_ARTICLE',index);
             },
             handleSizeChange(val) {
                 console.log(`每页 ${val} 条`);
             },
-            handleCurrentChange(val) {
-                console.log(`当前页: ${val}`);
+            getData({curPage=this.curPage, pageSize=this.pagesize, type="artList"}){
+                console.log('getData');
+                console.log('curPage==='+curPage+'pageSize==='+pageSize);
+                let params = Object.assign({}, this.schOpt, {curPage:curPage, pageSize:pageSize});
+                let allData = this.$store.state.mockdatas;
+                if(type==='artList'){
+                    this.artList = allData.articleList.slice((curPage-1)*pageSize, (curPage-1)*pageSize+pageSize);
+                }else if(type==='delList'){
+                    this.delList = allData.delArtlist.slice((curPage-1)*pageSize, (curPage-1)*pageSize+pageSize);
+                }
+            
+            },
+            handleCurrentChange(val) {//获取当前页数据
+                this.curPage = val;
+                this.getData({curPage:val});
             }
+        },
+        mounted(){
+            this.getData({});
         }
     }
 </script>

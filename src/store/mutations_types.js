@@ -6,3 +6,6 @@ export const SEARCH= 'SEARCH'
 export const CONCAT_ROUTERS= 'CONCAT_ROUTERS'
 export const ADD_ROUTERS= 'ADD_ROUTERS'
 export const BAR_SWITCH = 'BAR_SWITCH'
+
+export const DEL_ARTICLE = 'DEL_ARTICLE'
+export const RESTORE_ARTICLE = 'RESTORE_ARTICLE'

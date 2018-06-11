@@ -13,5 +13,6 @@ export default {
 <style>
 #app {
   height: 100%;
+  background-color: rgb(238, 238, 238);
 }
 </style>

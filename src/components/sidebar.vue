@@ -20,10 +20,12 @@
 						{{item.name}}
 					</el-menu-item>
 				</el-submenu>
-				<el-menu-item v-else-if="!menu.hidden" :index="menu.path" :key="index">
-					<i :class="menu.icon"></i>
-					<span>{{menu.name}}</span>
-				</el-menu-item>
+				<el-tooltip v-else-if="!menu.hidden" class="item" effect="dark" :content="menu.name" placement="right" :disabled="!isCollapse">
+				    <el-menu-item :index="menu.path" :key="index">
+    					<i :class="menu.icon"></i>
+    					<span>{{menu.name}}</span>
+    				</el-menu-item>
+				</el-tooltip>
 			</template>
 		</el-menu>
 	</div>

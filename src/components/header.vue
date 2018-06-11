@@ -12,6 +12,7 @@
                     </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item>关于作者</el-dropdown-item>
+                        <el-dropdown-item>项目地址</el-dropdown-item>
                         <el-dropdown-item divided><p @click="logout">退出登录</p></el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
