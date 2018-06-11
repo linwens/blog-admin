@@ -56,7 +56,7 @@ export const Guests = {
             }
 	    },
 	    {
-	    	path: 'v-markdown',
+	    	path: 'v-markdown/:id',
 	    	name: '文本编辑器',
 	    	components: {
 	    		page:VMarkdown

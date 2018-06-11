@@ -39,7 +39,7 @@
                             <el-table-column prop="aid" label="操作" min-width="80" header-align="center" align="center">
                                 <template slot-scope="tableOp">
                                     <el-badge :value="(tableOp.row.operate&&tableOp.row.operate==='save')?'未发':''" class="u-badge">
-                                        <el-button size="small" type="primary" @click="goPage('/blog/publish/'+tableOp.row.aid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
+                                        <el-button size="small" type="primary" @click="goPage('/guests/v-markdown/'+tableOp.row.aid)"><i class="el-icon-edit el-icon--left"></i>修改</el-button>
                                     </el-badge>
                                     <el-button size="small" type="danger" @click="handleDelete(tableOp.$index, tableOp.row)"><i class="el-icon-delete2 el-icon--left"></i>删除</el-button>
                                 </template>

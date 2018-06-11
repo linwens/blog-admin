@@ -141,7 +141,7 @@ export default {
                     }else{
                         parmas = Object.assign({},{title:this.articleForm.title, text:this.articleForm.text, brief:this.articleForm.brief, tags:JSON.stringify(tagsObj), option:this.option, operate:type})
                     }
-                    this.getAjax(this.HOST+'/ajax/subArticle',parmas,'POST').then(data=>{
+                    this.$store.dispatch('UPDATE_ARTICLE',parmas).then(data=>{
                         Notification({
                             type:'success',
                             message:data.res_msg,
@@ -150,9 +150,18 @@ export default {
                             offset:300
                         });
                         setTimeout(()=>{
-                            this.$router.push('/blog/list');
+                            this.$router.push('/guests/base-table');
                         }, 1500);
-                    })
+                    }).catch(err=>{
+                        console.log(err);
+                        Notification({
+                            type:'error',
+                            message:err,
+                            customClass:'hqb-notice',
+                            duration:2000,
+                            offset:300
+                        });
+                    });
                 }else{
                     Notification({
                         type:'error',
@@ -167,28 +176,20 @@ export default {
         },
         //获取已有文章详情
         getDetail(){
-            this.getAjax(this.HOST+'/ajax/getArticle',{aid:this.$route.params.id, option:this.option},'GET').then(data=>{
-                if(data.res_code==2){
-                    this.btnCtrl = true;
-                    Notification({
-                        type:'error',
-                        message:data.res_msg,
-                        customClass:'hqb-notice',
-                        duration:2000,
-                        offset:300
-                    });
-                    return;
-                }
-                this.articleForm.title=data.articleDetail.title;
-                this.articleForm.text=data.articleDetail.text;
-                this.articleForm.brief=data.articleDetail.brief;
-                this.tags=data.articleDetail.tags?data.articleDetail.tags:[];
+            let allData = this.$store.state.mockdatas.articleList;
+            let data = allData.find((val,i,arr)=>{
+                return val.aid === this.$route.params.id;
             });
+            this.articleForm.title=data.title;
+            this.articleForm.text=data.text;
+            this.articleForm.brief=data.brief;
+            this.tags=data.tags?data.tags:[];
         }
     },
     mounted () {
         if(this.$route.params.id&&this.$route.params.id!=':id'){
-            this.option = 'modify'
+            this.option = 'modify';
+            console.log(this.option);
             this.getDetail();
         }
     }

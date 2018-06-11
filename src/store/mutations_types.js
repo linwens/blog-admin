@@ -9,3 +9,4 @@ export const BAR_SWITCH = 'BAR_SWITCH'
 
 export const DEL_ARTICLE = 'DEL_ARTICLE'
 export const RESTORE_ARTICLE = 'RESTORE_ARTICLE'
+export const UPDATE_ARTICLE = 'UPDATE_ARTICLE'

@@ -1,4 +1,4 @@
-import {DEL_ARTICLE, RESTORE_ARTICLE} from '../mutations_types'
+import {DEL_ARTICLE, RESTORE_ARTICLE, UPDATE_ARTICLE} from '../mutations_types'
 
 const mockdatas = {
 	state:{
@@ -9,6 +9,7 @@ const mockdatas = {
 				"brief": "涉及微信，手机自动浏览器，app三端间的交互",
 				"title": "活动开发--app与wap交互",
 				"tags": [],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1526265440",
@@ -16,6 +17,7 @@ const mockdatas = {
 				"brief": "学习jQuery中ajax的实现思路，同时进一步学习ajax实现的原理。",
 				"title": "jQuery学习(12)--$.ajax()",
 				"tags": ["jquery", "ajax"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1525350303",
@@ -23,6 +25,7 @@ const mockdatas = {
 				"brief": "学习nginx配置，顺便研究下nginx是如何实现代理的。",
 				"title": "nginx配置相关",
 				"tags": ["nginx"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1524819256",
@@ -30,6 +33,7 @@ const mockdatas = {
 				"brief": "vue-router原理",
 				"title": "vue基础---vue-router原理",
 				"tags": ["vue-router"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1524711257",
@@ -37,6 +41,7 @@ const mockdatas = {
 				"brief": "vuex实现原理",
 				"title": "vue基础---vuex实现原理",
 				"tags": ["vuex"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1524448632",
@@ -44,6 +49,7 @@ const mockdatas = {
 				"brief": "了解vue生命周期的原理",
 				"title": "vue基础---生命周期",
 				"tags": ["vue"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1524126779",
@@ -51,6 +57,7 @@ const mockdatas = {
 				"brief": "jQuery学习(11)--$.attr()",
 				"title": "jQuery学习(11)--$.attr()",
 				"tags": ["attr", "access"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1523347484",
@@ -58,6 +65,7 @@ const mockdatas = {
 				"brief": "学习前端优化之cdn加速，后续涉及工程化思路",
 				"title": "网络知识--CDN部署",
 				"tags": ["cdn"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1523176074",
@@ -65,6 +73,7 @@ const mockdatas = {
 				"brief": "学习jQuery核心方法中的index()，获取元素对象索引值",
 				"title": "jQuery学习(10)--index()",
 				"tags": ["jQuery", "index"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1522823045",
@@ -72,6 +81,7 @@ const mockdatas = {
 				"brief": "正则表达式学习记录",
 				"title": "正则表达式记录",
 				"tags": ["正则表达式", "exec"],
+				"text":'',
 				"operate": "save"
 			},{
 				"time": "1522806049",
@@ -79,6 +89,7 @@ const mockdatas = {
 				"brief": "jQuery学习(9)--$()核心 及jQuery架构思路",
 				"title": "jQuery学习(9)--$()核心",
 				"tags": ["jQuery", "init"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1522748439",
@@ -86,6 +97,7 @@ const mockdatas = {
 				"brief": "jQuery学习(8)--$.param()",
 				"title": "jQuery学习(8)--$.param()",
 				"tags": ["jQuery", "param"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1522722609",
@@ -93,6 +105,7 @@ const mockdatas = {
 				"brief": "jQuery学习(7)--$.proxy()",
 				"title": "jQuery学习(7)--$.proxy()",
 				"tags": ["jquery", "proxy"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1522550359",
@@ -100,6 +113,7 @@ const mockdatas = {
 				"brief": "jQuery学习(5)--$.parseJSON()",
 				"title": "jQuery学习(6)--$.parseJSON()",
 				"tags": ["jQuery", "parseJSON"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1522335946",
@@ -107,6 +121,7 @@ const mockdatas = {
 				"brief": "jQuery学习(5)--$.map()和$.inArray()",
 				"title": "jQuery学习(5)--$.map()",
 				"tags": ["jQuery", "map"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1522058371",
@@ -114,6 +129,7 @@ const mockdatas = {
 				"brief": "jQuery学习(4)--$.when()",
 				"title": "jQuery学习(4)--$.when()",
 				"tags": ["jQuery", "when"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1522052061",
@@ -121,6 +137,7 @@ const mockdatas = {
 				"brief": "jQuery学习(2)--$.grep()以及$.makeArray()",
 				"title": "jQuery学习(3)--grep和makeArray",
 				"tags": ["jQuery", "grep", "makeArray", "merge"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1521692371",
@@ -128,6 +145,7 @@ const mockdatas = {
 				"brief": "学习$.extend()、isPlainObject()的实现思路",
 				"title": "jQuery学习(2)--$.extend()",
 				"tags": ["jQuery", "extend"],
+				"text":'',
 				"operate": "save"
 			}, {
 				"time": "1521556660",
@@ -135,12 +153,14 @@ const mockdatas = {
 				"brief": "jQuery源码学习，主要涉及数据操作。",
 				"title": "jQuery学习(1)--$.each()",
 				"tags": ["jQuery", "each"],
+				"text":'',
 				"operate": "publish"
 			}, {
 				"time": "1521425969",
 				"aid": "f3fac750-2b1b-11e8-af8e-91bfc1337408",
 				"brief": "vue单页模仿多页的切换效果",
 				"title": "vue--单页面transition",
+				"text":'',
 				"tags": ["vue"],
 				"operate": "save"
 			}
@@ -161,6 +181,24 @@ const mockdatas = {
 			state.articleList.sort(function(a,b){
 				return -(a.time-b.time);
 			});
+		},
+		[UPDATE_ARTICLE](state, article){
+			console.log(article);
+			let curArticle = state.articleList.find((val,i,arr)=>{
+			    return val.aid === article.aid;
+			});
+			for(let key in article){
+				if(curArticle.hasOwnProperty(key)){
+					if(key==='tags'){
+						curArticle[key] = [];//针对vue本地调试，改为body=>query
+						for(let pro in JSON.parse(article.tags)){
+						    curArticle[key].push(JSON.parse(article.tags)[pro])
+						}
+					}else{
+						curArticle[key] = article[key]
+					}
+				}
+			}
 		}
 	},
 	actions:{
@@ -169,6 +207,16 @@ const mockdatas = {
 		},
 		[RESTORE_ARTICLE]({commit},index){
 			commit('RESTORE_ARTICLE',index);
+		},
+		[UPDATE_ARTICLE]({commit},article){
+			return new Promise((resolve, reject)=>{
+				commit('UPDATE_ARTICLE',article);
+
+				resolve({
+					res_msg:article.operate==='publish'?'文章修改成功并发布':'文章修改成功未发布'
+				});
+			});
+			
 		}
 	}
 };
