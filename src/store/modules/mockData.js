@@ -1,4 +1,4 @@
-import {DEL_ARTICLE, RESTORE_ARTICLE, UPDATE_ARTICLE} from '../mutations_types'
+import {DEL_ARTICLE, RESTORE_ARTICLE, UPDATE_ARTICLE, SORT_ARTICLE} from '../mutations_types'
 
 const mockdatas = {
 	state:{
@@ -176,14 +176,9 @@ const mockdatas = {
 		[RESTORE_ARTICLE](state,index){
 			let curItem = state.delArtlist[index];
 			state.delArtlist.splice(index,1);
-			//还原后插回到原来的位置，根据时间顺序
-			state.articleList.push(curItem);
-			state.articleList.sort(function(a,b){
-				return -(a.time-b.time);
-			});
+			state.articleList.push(curItem);//只做简单的push
 		},
 		[UPDATE_ARTICLE](state, article){
-			console.log(article);
 			let curArticle = state.articleList.find((val,i,arr)=>{
 			    return val.aid === article.aid;
 			});
@@ -199,14 +194,28 @@ const mockdatas = {
 					}
 				}
 			}
+		},
+		[SORT_ARTICLE](state, payload){
+			state.articleList.sort((a,b)=>{
+				if(payload.type==='time'){
+					let rslt = a.time-b.time;
+					return rslt*payload.val
+				}
+			})
 		}
 	},
 	actions:{
 		[DEL_ARTICLE]({commit},index){
 			commit('DEL_ARTICLE',index);
 		},
-		[RESTORE_ARTICLE]({commit},index){
-			commit('RESTORE_ARTICLE',index);
+		[RESTORE_ARTICLE]({commit}, payload){
+			commit('RESTORE_ARTICLE',payload.index);
+			if(payload.sortRule&&Object.keys(payload.sortRule).length){//且对象不为空
+				commit('SORT_ARTICLE', payload.sortRule);
+			}else{
+				//默认根据时间由近及远排序
+				commit('SORT_ARTICLE', {type:'time',val:-1});
+			}
 		},
 		[UPDATE_ARTICLE]({commit},article){
 			return new Promise((resolve, reject)=>{
@@ -216,7 +225,9 @@ const mockdatas = {
 					res_msg:article.operate==='publish'?'文章修改成功并发布':'文章修改成功未发布'
 				});
 			});
-			
+		},
+		[SORT_ARTICLE]({commit}, condition){//排序
+			commit('SORT_ARTICLE', condition);
 		}
 	}
 };
