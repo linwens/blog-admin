@@ -27,7 +27,7 @@
                                     <el-option label="文章标题" value="1"></el-option>
                                     <el-option label="文章简介" value="2"></el-option>
                                 </el-select>
-                                <el-button slot="append" icon="el-icon-search"></el-button>
+                                <el-button slot="append" icon="el-icon-search" @click="doSearch"></el-button>
                             </el-input>
                         </el-col>
                     </el-row>
@@ -150,6 +150,13 @@
             }
         },
         methods: {
+            doSearch(){
+                //搜索功能
+                this.$store.dispatch('FILTER_ARTICLE',{
+                    keywords:this.keywords,
+                    schType:this.schType
+                });
+            },
             doSeque(val){
                 console.log('sequence====='+val);
                 this.$store.dispatch('SORT_ARTICLE',{

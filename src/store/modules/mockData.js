@@ -1,4 +1,4 @@
-import {DEL_ARTICLE, RESTORE_ARTICLE, UPDATE_ARTICLE, SORT_ARTICLE} from '../mutations_types'
+import {DEL_ARTICLE, RESTORE_ARTICLE, UPDATE_ARTICLE, SORT_ARTICLE, FILTER_ARTICLE} from '../mutations_types'
 
 const mockdatas = {
 	state:{
@@ -202,6 +202,10 @@ const mockdatas = {
 					return rslt*payload.val
 				}
 			})
+		},
+		[FILTER_ARTICLE](state, payload){
+			console.log(payload);
+			state.articleList.filter()
 		}
 	},
 	actions:{
@@ -228,6 +232,9 @@ const mockdatas = {
 		},
 		[SORT_ARTICLE]({commit}, condition){//排序
 			commit('SORT_ARTICLE', condition);
+		},
+		[FILTER_ARTICLE]({commit}, condition){//筛选：范围、关键字
+			commit('FILTER_ARTICLE', condition);
 		}
 	}
 };
