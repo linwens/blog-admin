@@ -81,7 +81,7 @@
                     <el-row type="flex" justify="end">
                         <el-pagination
                             @size-change="handleSizeChange"
-                            @current-change="handleCurrentChange"
+                            @current-change="handleCurrentChange2"
                             :current-page="delCurPage"
                             :page-sizes="[5, 10, 20]"
                             :page-size="delPagesize"
@@ -96,8 +96,6 @@
     </div>
 </template>
 <script>
-    import hqbPage from '@/components/page';
-    import hqbSch from '@/components/search';
     import { timeFormat } from '@/assets/js/cmn/util'  //引入vue插件,或其他组件
     import { Notification } from 'element-ui';
 
@@ -132,10 +130,7 @@
                 curSque:{type:'',val:1},//当前排序规则
             }
         },
-        components:{
-            hqbPage,
-            hqbSch
-        },
+        components:{},
         computed:{
             articleList(){
                 return this.$store.state.mockdatas.articleList;
@@ -179,14 +174,12 @@
                     let place = (this.curPage-1)*this.pagesize+index;
                     console.log(place);
                     this.$store.dispatch('DEL_ARTICLE',place);
+                    console.log(this.delList);
                 }).catch(err => {});
             },
             handleRestore(index, row){
                 let place = this.delList.length>this.delPagesize?(this.curPage-1)*this.delPagesize+index:index;
                 this.$store.dispatch('RESTORE_ARTICLE', {index:place,sortRule:this.curSque});//第三个参数是当前排序规则
-            },
-            handleSizeChange(val) {
-                console.log(`每页 ${val} 条`);
             },
             getData({curPage=this.curPage, pageSize=this.pagesize, type="artList"}){
                 let params = Object.assign({}, this.schOpt, {curPage:curPage, pageSize:pageSize});
@@ -198,9 +191,18 @@
                 }
             
             },
-            handleCurrentChange(val) {//获取当前页数据
+            handleSizeChange(val) {
+                console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange(val) {//获取文章当前页数据
+                console.log(`第 ${val} 页`);
                 this.curPage = val;
                 this.getData({curPage:val});
+            },
+            handleCurrentChange2(val) {//获取已删除文章当前页数据
+                console.log(`第 ${val} 页`);
+                this.delCurPage = val;
+                this.getData({curPage:val, pageSize:this.delPagesize,type:'delList'});
             }
         },
         mounted(){
