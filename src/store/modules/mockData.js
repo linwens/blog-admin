@@ -166,17 +166,33 @@ const mockdatas = {
 			}
 		],//文章列表
         delArtlist:[],//被删除文章列表
+        filterArtlist:[],//被筛选后列表
 	},
 	mutations:{
-		[DEL_ARTICLE](state,index){
-			let curItem = state.articleList[index];
-			state.articleList.splice(index,1);
-			state.delArtlist.push(curItem);
+		[DEL_ARTICLE](state,payload){
+			let index = payload.index;
+			if(payload.curList&&payload.curList===1){
+				let curItem = state.articleList[index];
+				state.articleList.splice(index,1);
+				state.delArtlist.push(curItem);
+			}else if(payload.curList&&payload.curList===2){
+				let curItem = state.filterArtlist[index];
+				state.filterArtlist.splice(index,1);
+				state.delArtlist.push(curItem);
+				//同时删除articleList内的对应条目
+				state.articleList.splice(state.articleList.findIndex(item=>item===curItem),1);
+			}
+			
 		},
-		[RESTORE_ARTICLE](state,index){
+		[RESTORE_ARTICLE](state,payload){
+			let index = payload.index;
 			let curItem = state.delArtlist[index];
-			state.delArtlist.splice(index,1);
-			state.articleList.push(curItem);//只做简单的push
+				state.delArtlist.splice(index,1);
+				state.articleList.push(curItem);//只做简单的push
+			if(payload.curList&&payload.curList===2){
+				state.filterArtlist.push(curItem);//只做简单的push
+			};
+			console.log(state.articleList);
 		},
 		[UPDATE_ARTICLE](state, article){
 			let curArticle = state.articleList.find((val,i,arr)=>{
@@ -196,25 +212,49 @@ const mockdatas = {
 			}
 		},
 		[SORT_ARTICLE](state, payload){
+			let type = payload.type;
+			let val = payload.val;
 			state.articleList.sort((a,b)=>{
-				if(payload.type==='time'){
-					let rslt = a.time-b.time;
-					return rslt*payload.val
+				if(type==='time'){
+					let rslt = a[type]-b[type];
+					return rslt*val
 				}
-			})
+			});
+			state.filterArtlist.sort((a,b)=>{
+				if(type==='time'){
+					let rslt = a[type]-b[type];
+					return rslt*val
+				}
+			});
 		},
 		[FILTER_ARTICLE](state, payload){
-			console.log(payload);
-			state.articleList.filter()
+			let filterArr = state.articleList.filter((curVal, index, arr)=>{
+				let kw = payload.keywords;
+				let type = payload.schType;
+				if(!kw){
+					return true;
+				}else{
+					let regExp = new RegExp(kw);
+					let rslt = true;
+					if(!type){
+						rslt = regExp.test(JSON.stringify(curVal));
+					}else{
+						rslt = regExp.test(curVal[type]);
+					}
+					return rslt;
+				}
+			});
+			state.filterArtlist = filterArr;
+			console.log(state.filterArtlist);
 		}
 	},
 	actions:{
-		[DEL_ARTICLE]({commit},index){
-			commit('DEL_ARTICLE',index);
+		[DEL_ARTICLE]({commit},payload){
+			commit('DEL_ARTICLE',payload);
 		},
 		[RESTORE_ARTICLE]({commit}, payload){
-			commit('RESTORE_ARTICLE',payload.index);
-			if(payload.sortRule&&Object.keys(payload.sortRule).length){//且对象不为空
+			commit('RESTORE_ARTICLE',payload);
+			if(payload.sortRule&&payload.sortRule.type){//且对象不为空
 				commit('SORT_ARTICLE', payload.sortRule);
 			}else{
 				//默认根据时间由近及远排序

@@ -24,8 +24,8 @@
                             </el-select>
                             <el-input placeholder="请输入内容" v-model="keywords" class="input-with-select">
                                 <el-select v-model="schType" slot="prepend" placeholder="范围" class="innerSelect">
-                                    <el-option label="文章标题" value="1"></el-option>
-                                    <el-option label="文章简介" value="2"></el-option>
+                                    <el-option label="文章标题" value="title"></el-option>
+                                    <el-option label="文章简介" value="brief"></el-option>
                                 </el-select>
                                 <el-button slot="append" icon="el-icon-search" @click="doSearch"></el-button>
                             </el-input>
@@ -55,7 +55,7 @@
                             :page-sizes="[5, 10, 20]"
                             :page-size="pagesize"
                             layout="total, sizes, prev, pager, next, jumper"
-                            :total="articleList.length"
+                            :total="totalNum"
                             background
                         >
                         </el-pagination>
@@ -112,6 +112,7 @@
                     schWord:''
                 },
                 apiCtrl:{},
+                totalNum:0,//文章列表文章总数
                 curPage: 1,
                 pagesize:5,
                 delCurPage:1,
@@ -128,6 +129,7 @@
                 schType:'',//搜索范围
                 checked:false,//批量选择
                 curSque:{type:'',val:1},//当前排序规则
+                curList:1,//当前哪类文章列表，1:原文章列表;2:筛选后文章列表;3:被删除文章列表
             }
         },
         components:{},
@@ -137,16 +139,26 @@
             },
             delArtlist(){
                 return this.$store.state.mockdatas.delArtlist;
+            },
+            filterArtlist(){
+                return this.$store.state.mockdatas.filterArtlist;
             }
         },
         watch:{
             articleList(){
                 //this.artList = this.$store.state.mockdatas.articleList;
-                this.getData({type:'artList'});
+                if(this.curList===1){
+                    this.getData({type:'artList'});
+                }
             },
             delArtlist(){
                 //this.delList = this.$store.state.mockdatas.delArtlist;
                 this.getData({curPage:this.delCurPage, pageSize:this.delPagesize,type:'delList'});
+            },
+            filterArtlist(){
+                if(this.curList===2){
+                    this.getData({type:'filterArtlist'});
+                }
             }
         },
         methods: {
@@ -155,16 +167,20 @@
                 this.$store.dispatch('FILTER_ARTICLE',{
                     keywords:this.keywords,
                     schType:this.schType
+                }).then(()=>{
+                    //this.artList = this.$store.state.mockdatas.filterArtlist;
+                    this.curPage = 1;
+                    this.curList = 2;
+                    this.getData({type:'filterArtlist'});
                 });
             },
             doSeque(val){
-                console.log('sequence====='+val);
-                this.$store.dispatch('SORT_ARTICLE',{
-                    type:'time',
-                    val:val
-                });
                 this.curSque.type='time';
                 this.curSque.val=val;
+                this.$store.dispatch('SORT_ARTICLE',{
+                    type:this.curSque.type,
+                    val:val,
+                });
             },
             goPage(val){//跳转
                 this.$router.push({path:val})
@@ -180,21 +196,25 @@
                 }).then(() => {
                     let place = (this.curPage-1)*this.pagesize+index;
                     console.log(place);
-                    this.$store.dispatch('DEL_ARTICLE',place);
+                    this.$store.dispatch('DEL_ARTICLE',{index:place,curList:this.curList});
                     console.log(this.delList);
                 }).catch(err => {});
             },
             handleRestore(index, row){
                 let place = this.delList.length>this.delPagesize?(this.curPage-1)*this.delPagesize+index:index;
-                this.$store.dispatch('RESTORE_ARTICLE', {index:place,sortRule:this.curSque});//第三个参数是当前排序规则
+                this.$store.dispatch('RESTORE_ARTICLE', {index:place,sortRule:this.curSque,curList:this.curList});//第二个参数是当前排序规则，第三个是搜索后当前列表
             },
             getData({curPage=this.curPage, pageSize=this.pagesize, type="artList"}){
                 let params = Object.assign({}, this.schOpt, {curPage:curPage, pageSize:pageSize});
                 let allData = this.$store.state.mockdatas;
                 if(type==='artList'){
                     this.artList = allData.articleList.slice((curPage-1)*pageSize, (curPage-1)*pageSize+pageSize);
+                    this.totalNum = allData.articleList.length;
                 }else if(type==='delList'){
                     this.delList = allData.delArtlist.slice((curPage-1)*pageSize, (curPage-1)*pageSize+pageSize);
+                }else{
+                    this.artList = allData.filterArtlist.slice((curPage-1)*pageSize, (curPage-1)*pageSize+pageSize);
+                    this.totalNum = allData.filterArtlist.length;
                 }
             
             },
@@ -204,7 +224,11 @@
             handleCurrentChange(val) {//获取文章当前页数据
                 console.log(`第 ${val} 页`);
                 this.curPage = val;
-                this.getData({curPage:val});
+                if(this.curList===1){
+                    this.getData({curPage:val});
+                }else if(this.curList===2){
+                    this.getData({curPage:val, type:'filterArtlist'});
+                }
             },
             handleCurrentChange2(val) {//获取已删除文章当前页数据
                 console.log(`第 ${val} 页`);
