@@ -84,15 +84,21 @@
                             <el-row type="flex" justify="center" class="m-circle-box">
                                 <el-col :span="8">
                                     <h3>vue后台系统</h3>
-                                    <el-progress type="circle" :width="140" :percentage="0" :stroke-width="8" color=""></el-progress>
+                                    <div class="u-progress" @click="showDetail(1)">
+                                        <el-progress type="circle" :width="140" :percentage="0" :stroke-width="8" color=""></el-progress>
+                                    </div>
                                 </el-col>
                                 <el-col :span="8">
                                     <h3>express个人博客</h3>
-                                    <el-progress type="circle" :width="140" :percentage="50" :stroke-width="8" color=""></el-progress>
+                                    <div class="u-progress" @click="showDetail(2)">
+                                        <el-progress type="circle" :width="140" :percentage="50" :stroke-width="8" color=""></el-progress>
+                                    </div>
                                 </el-col>
                                 <el-col :span="8">
                                     <h3>react-native DEMO</h3>
-                                    <el-progress type="circle" :width="140" :percentage="100" :stroke-width="8" color=""></el-progress>
+                                    <div class="u-progress" @click="showDetail(3)">
+                                        <el-progress type="circle" :width="140" :percentage="100" :stroke-width="8" color=""></el-progress>
+                                    </div>
                                 </el-col>
                             </el-row>
                         </el-card>
@@ -101,14 +107,17 @@
                         <el-card shadow="hover" class="m-progress-detail" :body-style="{height:'80%'}">
                             <!-- 5、相应项目计划表 -->
                             <h2>项目详情</h2>
-                            <el-steps direction="vertical" :active="1" class="u-steps">
-                                <el-step title="创建项目" description="2018.06.05"></el-step>
-                                <el-step title="页面开发" description="2018.06.06"></el-step>
-                                <el-step title="本地mock" description="2018.06.16"></el-step>
-                                <el-step title="接口联调" description="2018.06.19"></el-step>
-                                <el-step title="项目测试" description="2018.06.24"></el-step>
-                                <el-step title="项目发布" description="2018.07.01"></el-step>
-                            </el-steps>
+                            <transition name='slide'>
+                                <el-steps direction="vertical" :active="projectDetail.state" class="u-steps" v-if="projectDetail.name==='project1'" key="project1">
+                                    <el-step :title="item.title" :description="item.desc" v-for="(item,index) in projectDetail.infoList" :key="item.id"></el-step>
+                                </el-steps>
+                                <el-steps direction="vertical" :active="projectDetail.state" class="u-steps" v-else-if="projectDetail.name==='project2'" key="project2">
+                                    <el-step :title="item.title" :description="item.desc" v-for="(item,index) in projectDetail.infoList" :key="item.id"></el-step>
+                                </el-steps>
+                                <el-steps direction="vertical" :active="projectDetail.state" class="u-steps" v-else="projectDetail.name==='project3'" key="project3">
+                                    <el-step :title="item.title" :description="item.desc" v-for="(item,index) in projectDetail.infoList" :key="item.id"></el-step>
+                                </el-steps>
+                            </transition>
                         </el-card>
                     </el-col>
                 </el-row>
@@ -120,48 +129,18 @@
                     <!-- 4、事件备忘录(三列展示：灵光一现~pre、就是干~doing、你好棒棒~done，拖入拖出实现增删)Vue.Draggable, ui模仿teambition,    npm install vuedraggable sortablejs --save -->
                     <h2>需求池</h2>
                     <el-row :gutter="20">
-                        <el-col :span="8">
+                        <el-col :span="8" v-for="(item, index) in needsPool" :key="item.tabKey">
                             <el-card shadow="never" :body-style="{backgroundColor:'#eee'}">
                                 <el-dropdown :hide-on-click="false">
                                     <span class="el-dropdown-link">
-                                    灵光一现<i class="el-icon-arrow-down el-icon--right"></i>
+                                    {{item.tabName}}<i class="el-icon-arrow-down el-icon--right"></i>
                                     </span>
                                     <el-dropdown-menu slot="dropdown">
-                                        <el-dropdown-item>当前栏描述</el-dropdown-item>
+                                        <el-dropdown-item>{{item.desc}}</el-dropdown-item>
                                     </el-dropdown-menu>
                                 </el-dropdown>
-                                <draggable v-model="demandArr" :options="{group:'demand'}" @start="drag=true" @end="drag=false" class="m-dragZone">
-                                   <div v-for="element in demandArr" :key="element.id" class="u-dragItem">{{element.name}}</div>
-                                </draggable>
-                            </el-card>
-                        </el-col>
-                        <el-col :span="8">
-                            <el-card shadow="never" :body-style="{backgroundColor:'#eee'}">
-                                <el-dropdown :hide-on-click="false">
-                                    <span class="el-dropdown-link">
-                                    就是干<i class="el-icon-arrow-down el-icon--right"></i>
-                                    </span>
-                                    <el-dropdown-menu slot="dropdown">
-                                        <el-dropdown-item>当前栏描述</el-dropdown-item>
-                                    </el-dropdown-menu>
-                                </el-dropdown>
-                                <draggable v-model="doingArr" :options="{group:'demand'}" @start="drag=true" @end="drag=false" class="m-dragZone">
-                                   <div v-for="element in doingArr" :key="element.id" class="u-dragItem">{{element.name}}</div>
-                                </draggable>
-                            </el-card>
-                        </el-col>
-                        <el-col :span="8">
-                            <el-card shadow="never" :body-style="{backgroundColor:'#eee'}">
-                                <el-dropdown :hide-on-click="false">
-                                    <span class="el-dropdown-link">
-                                    你好棒棒<i class="el-icon-arrow-down el-icon--right"></i>
-                                    </span>
-                                    <el-dropdown-menu slot="dropdown">
-                                        <el-dropdown-item>当前栏描述</el-dropdown-item>
-                                    </el-dropdown-menu>
-                                </el-dropdown>
-                                <draggable v-model="doneArr" :options="{group:'demand'}" @start="drag=true" @end="drag=false" class="m-dragZone">
-                                   <div v-for="element in doneArr" :key="element.id" class="u-dragItem">{{element.name}}</div>
+                                <draggable v-model="item.dragItemlist" :options="{group:'demand'}" @start="drag=true" @end="drag=false" class="m-dragZone">
+                                   <div v-for="element in item.dragItemlist" :key="element.id" class="u-dragItem">{{element.name}}</div>
                                 </draggable>
                             </el-card>
                         </el-col>
@@ -193,24 +172,162 @@
                     backgroundImage:''
                 },
                 sidebarState:true,
-                demandArr:[
+                needsPool:[
                     {
-                        name:'vuejs',
-                        id:'1',
+                        tabKey:1,
+                        tabName:'灵光一现',
+                        desc:'想到的需求',
+                        dragItemlist:[
+                            {
+                                name:'vuejs',
+                                id:'1',
+                            },
+                            {
+                                name:'把后台系统优化下',
+                                id:'2',
+                            }
+                        ]
+                    },
+                    {
+                        tabKey:2,
+                        tabName:'就是干',
+                        desc:'正在努力实现的需求',
+                        dragItemlist:[
+                            {
+                                name:'fighting',
+                                id:'5',
+                            },
+                            {
+                                name:'node.js',
+                                id:'6',
+                            }
+                        ]
+                    },
+                    {
+                        tabKey:3,
+                        tabName:'你好棒棒',
+                        desc:'完成并上线的需求',
+                        dragItemlist:[
+                            {
+                                name:'great',
+                                id:'7',
+                            },
+                            {
+                                name:'个人博客',
+                                id:'8',
+                            },
+                        ]
                     }
                 ],
-                doingArr:[
-                    {
-                        name:'fighting',
-                        id:'5',
-                    }
-                ],
-                doneArr:[
-                    {
-                        name:'great',
-                        id:'6',
-                    }
-                ]
+                projectDetail:{},
+                project1:{
+                    name:'project1',
+                    state:0,
+                    infoList:[
+                        {
+                            id:'11',
+                            title:'创建项目',
+                            desc:'2018.06.05'
+                        },
+                        {
+                            id:'12',
+                            title:'页面开发',
+                            desc:'2018.06.06'
+                        },
+                        {
+                            id:'13',
+                            title:'本地mock',
+                            desc:'2018.06.16'
+                        },
+                        {
+                            id:'14',
+                            title:'接口联调',
+                            desc:'2018.06.19'
+                        },
+                        {
+                            id:'15',
+                            title:'项目测试',
+                            desc:'2018.06.24'
+                        },
+                        {
+                            id:'16',
+                            title:'项目发布',
+                            desc:'2018.07.01'
+                        }
+                    ]
+                },
+                project2:{
+                    name:'project2',
+                    state:3,
+                    infoList:[
+                        {
+                            id:'21',
+                            title:'创建项目',
+                            desc:'2018.06.05'
+                        },
+                        {
+                            id:'22',
+                            title:'页面开发',
+                            desc:'2018.06.06'
+                        },
+                        {
+                            id:'23',
+                            title:'本地mock',
+                            desc:'2018.06.16'
+                        },
+                        {
+                            id:'24',
+                            title:'接口联调',
+                            desc:'2018.06.19'
+                        },
+                        {
+                            id:'25',
+                            title:'项目测试',
+                            desc:'2018.06.24'
+                        },
+                        {
+                            id:'26',
+                            title:'项目发布',
+                            desc:'2018.07.01'
+                        }
+                    ]
+                },
+                project3:{
+                    name:'project3',
+                    state:6,
+                    infoList:[
+                        {
+                            id:'31',
+                            title:'创建项目',
+                            desc:'2018.06.05'
+                        },
+                        {
+                            id:'32',
+                            title:'页面开发',
+                            desc:'2018.06.06'
+                        },
+                        {
+                            id:'33',
+                            title:'本地mock',
+                            desc:'2018.06.16'
+                        },
+                        {
+                            id:'34',
+                            title:'接口联调',
+                            desc:'2018.06.19'
+                        },
+                        {
+                            id:'35',
+                            title:'项目测试',
+                            desc:'2018.06.24'
+                        },
+                        {
+                            id:'36',
+                            title:'项目发布',
+                            desc:'2018.07.01'
+                        }
+                    ]
+                },
             }
         },
         components:{
@@ -243,7 +360,15 @@
             toggleSidebar (val){//参数就是新值
                 //参考NavMenu导航菜单
                 this.$store.dispatch('BAR_SWITCH');
+            },
+            showDetail (i){
+                console.log('进入showDetail');
+                //展示项目详情
+                this.projectDetail = this['project'+i];
             }
+        },
+        mounted(){
+            this.projectDetail = this.project1;
         }
     }
 </script>
@@ -336,6 +461,10 @@
             }
             .m-circle-box{
                 text-align: center;
+                .u-progress{
+                    display: inline-block;
+                    cursor: pointer;
+                }
             }
         }
         .m-progress-detail{
@@ -370,6 +499,23 @@
                 background-color: #fff;
                 border-radius: 5px;
             }
+        }
+    }
+    /*项目详情展示动画*/
+    .slide-enter-active{
+        animation: fadeInRight .3s linear;
+    }
+    .slide-leave-active{
+        animation: fadeInRight 0s linear reverse;
+    }
+    @keyframes fadeInRight {
+        from {
+            opacity: 0;
+            transform: translateX(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
         }
     }
 </style>
