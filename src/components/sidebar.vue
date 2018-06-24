@@ -2,7 +2,7 @@
 	<!-- https://blog.csdn.net/harsima/article/details/77949465 -->
 	<div id="sideBar">
 		<el-menu 
-			:background-color="'#1e90ff'"
+			:background-color="$store.state.theme.themeColor"
 			:text-color="'#fff'"
 			:active-text-color="'#fff'"
 			:collapse="isCollapse"

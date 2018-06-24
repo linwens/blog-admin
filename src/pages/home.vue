@@ -4,8 +4,8 @@
 			<v-header></v-header>
 		</el-row>
 		<el-row style="background-color:#eee;"><!-- 这里可以设置整个背景色 -->
-			<el-col :span="toggleBar?1:4" :style="{backgroundColor:'#1e90ff'}" class="sidebar-container" :class="{toggleBar:toggleBar}">
-				<v-sidebar></v-sidebar>
+			<el-col :span="toggleBar?1:4" :style="{backgroundColor:$store.state.theme.themeColor}" class="sidebar-container" :class="{toggleBar:toggleBar}">
+				<v-sidebar></v-sidebar><!-- Jcolor：#1e90ff -->
 			</el-col>
 			<el-col :span="toggleBar?23:20" :class="[sMainBox, toggleBar?sBig:'']">
 				<v-breadcrumb></v-breadcrumb>

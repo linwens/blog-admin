@@ -37,6 +37,8 @@
                             <el-color-picker
                                 v-model="myColor"
                                 :predefine="pfColor"
+                                @change="changeTheme"
+                                @active-change="changeTheme"
                             ></el-color-picker>
                         </el-col>
                     </el-row>
@@ -79,7 +81,7 @@
                 <el-row :gutter="20">
                     <el-col :span="18">
                         <el-card shadow="hover" class="m-progress">
-                            <!-- 5、项目进度条(点击进度条展示) -->
+                            <!-- 5、项目进度条(点击进度条展示)ok -->
                             <h2>近期项目</h2>
                             <el-row type="flex" justify="center" class="m-circle-box">
                                 <el-col :span="8">
@@ -105,7 +107,7 @@
                     </el-col>
                     <el-col :span="6"><!-- 剥离出来做个组件 -->
                         <el-card shadow="hover" class="m-progress-detail" :body-style="{height:'80%'}">
-                            <!-- 5、相应项目计划表 -->
+                            <!-- 5、相应项目计划表ok -->
                             <h2>项目详情</h2>
                             <transition name='slide'>
                                 <el-steps direction="vertical" :active="projectDetail.state" class="u-steps" v-if="projectDetail.name==='project1'" key="project1">
@@ -159,7 +161,7 @@
             return {
                 userType:this.$store.state.user.type,
                 myColor:'#1e90ff',
-                pfColor:[
+                pfColor:[//颜色预选值
                     '#ff4500',
                     '#ff8c00',
                     '#ffd700',
@@ -365,7 +367,13 @@
                 console.log('进入showDetail');
                 //展示项目详情
                 this.projectDetail = this['project'+i];
-            }
+            },
+            changeTheme(val){
+                //change事件是点击确定后触发
+                //active-change是选择颜色后实时展示
+                console.log('changeTheme===='+val);
+                this.$store.dispatch('CHANGE_COLOR',val);
+            },
         },
         mounted(){
             this.projectDetail = this.project1;
@@ -373,6 +381,7 @@
     }
 </script>
 <style lang="less">
+    @import '~@/assets/less/utils/theme.less';
     #Guest_index{
         .el-row{
             margin-bottom: 20px;

@@ -1,5 +1,5 @@
 <template>
-  <div id="v-header">
+  <div id="v-header" :style="{backgroundColor:$store.state.theme.themeColor}">
       
       <el-col :span="24">
           <el-col :span="16">
