@@ -381,7 +381,8 @@
                 //change事件是点击确定后触发
                 //active-change是选择颜色后实时展示
                 console.log('changeTheme===='+val);
-                this.$store.dispatch('CHANGE_COLOR',val);
+                console.log('curColor==='+this.myColor);
+                this.$store.dispatch('CHANGE_COLOR',this.myColor);
             },
             addIdea(item){
                 //增加点子

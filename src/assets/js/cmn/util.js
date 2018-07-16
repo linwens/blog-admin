@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import instance from '@/http';//导出拦截器中声明的instance
 import qs from 'qs';
+import colors from './colors';//引入颜色切换的方法函数
 //公共数字转化
 export const numFormat = (num, precision)=> {//字符串加小数点
     var precision = precision || 2;
@@ -59,22 +60,5 @@ export const getAjax = (url, params, type)=> {
         })
     })
 };
-//渐变颜色值
-/*将rgb转16进制*/
-function clamp(v, max) {
-    return Math.min(Math.max(v, 0), max);
-}
-
-function toHex(v) {
-    return '#' + v.map(function (c) {
-        c = clamp(Math.round(c), 255);
-        return (c < 16 ? '0' : '') + c.toString(16);
-    }).join('');
-}
-
-export const gradualChange = (rgba,val)=>{
-    //先拿到rgba的值
-    //再抄几个颜色值转换公共方法
-    //再抄api方法
-
-}
+//色值切换方法
+export const colorFn = colors;
