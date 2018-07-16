@@ -142,7 +142,16 @@
                                     </el-dropdown-menu>
                                 </el-dropdown>
                                 <draggable v-model="item.dragItemlist" :options="{group:'demand'}" @start="drag=true" @end="drag=false" class="m-dragZone">
-                                   <div v-for="element in item.dragItemlist" :key="element.id" class="u-dragItem">{{element.name}}</div>
+                                    <div v-for="element in item.dragItemlist" :key="element.id" class="u-dragItem">
+                                        <i class="el-icon-close" @click="delIdea(item,element.id)"></i>
+                                        <el-input
+                                          type="textarea"
+                                          :autosize="{ minRows: 2}"
+                                          placeholder="请输入内容"
+                                          v-model="element.name">{{element.name}}
+                                        </el-input>
+                                    </div>
+                                    <el-button type="primary" icon="el-icon-circle-plus-outline" @click="addIdea(item)">添加点子</el-button>
                                 </draggable>
                             </el-card>
                         </el-col>
@@ -374,6 +383,31 @@
                 console.log('changeTheme===='+val);
                 this.$store.dispatch('CHANGE_COLOR',val);
             },
+            addIdea(item){
+                //增加点子
+                let curPoolIndex = this.needsPool.findIndex((val)=>{
+                    return val.tabKey === item.tabKey;
+                });
+                let curList = this.needsPool[curPoolIndex].dragItemlist;
+                let len = curList.length;
+                curList.push([{
+                    name:'',
+                    id:len,
+                }]);
+            },
+            delIdea(item,id){
+                //删除点子
+                //找到信息所在栏
+                let curPoolIndex = this.needsPool.findIndex((val)=>{
+                    return val.tabKey === item.tabKey;
+                });
+                let curList = this.needsPool[curPoolIndex].dragItemlist;
+                //找到具体信息
+                let curEleIndex = curList.findIndex((val)=>{
+                    return val.id === id;
+                });
+                curList.splice(curEleIndex,1)
+            }
         },
         mounted(){
             this.projectDetail = this.project1;
@@ -499,14 +533,31 @@
                 background-color: #eee;
             }
             .u-dragItem{
-                width: 90%;
-                height: 80px;
-                padding: 10px 10px 10px 20px;
+                position: relative;
+                box-sizing: border-box;
+                min-height: 60px;
+                padding: 20px 10px;
                 margin: 10px auto;
                 font-size: 14px;
                 color: #909399;
                 background-color: #fff;
                 border-radius: 5px;
+                &:hover{
+                    .el-icon-close{
+                        display: block;
+                    }
+                };
+                .el-icon-close{
+                    position: absolute;
+                    top: 5px;
+                    right: 5px;
+                    display: none;
+                    cursor: pointer;
+                }
+                .el-textarea__inner{
+                    border:none;
+                    resize:none;
+                }
             }
         }
     }
