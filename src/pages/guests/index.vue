@@ -25,6 +25,7 @@
                         <el-col :span="4">
                             <el-switch
                                 v-model="sidebarState"
+                                :active-color="$store.state.theme.themeColor"
                                 @change="toggleSidebar"
                             ></el-switch>
                         </el-col>
@@ -151,7 +152,7 @@
                                           v-model="element.name">{{element.name}}
                                         </el-input>
                                     </div>
-                                    <el-button type="primary" icon="el-icon-circle-plus-outline" @click="addIdea(item)">添加点子</el-button>
+                                    <el-button type="primary" :style="{backgroundColor:$store.state.theme.themeColor,borderColor:$store.state.theme.themeColor}" icon="el-icon-circle-plus-outline" @click="addIdea(item)">添加点子</el-button>
                                 </draggable>
                             </el-card>
                         </el-col>
