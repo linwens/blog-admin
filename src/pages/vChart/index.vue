@@ -19,10 +19,10 @@
                     </div>
                 </el-col>
                 <el-col :span="22">
-                    <Bar v-if="type===1" css-classes="m-chart-container" :height="200"></Bar>
-                    <Doughnut v-else-if="type===2" css-classes="m-chart-container" :height="200"></Doughnut>
-                    <Pie v-else-if="type===3" css-classes="m-chart-container" :height="200"></Pie>
-                    <line-chart v-else="type===4" css-classes="m-chart-container" :height="200"></line-chart>
+                    <Bar v-if="type===1" css-classes="m-chart-container" :height="200" :color="$store.state.theme.themeColor"></Bar>
+                    <Doughnut v-else-if="type===2" css-classes="m-chart-container" :height="200" :color="$store.state.theme.themeColor"></Doughnut>
+                    <Pie v-else-if="type===3" css-classes="m-chart-container" :height="200" :color="$store.state.theme.themeColor"></Pie>
+                    <line-chart v-else="type===4" css-classes="m-chart-container" :height="200" :color="$store.state.theme.themeColor"></line-chart>
                 </el-col>
             </el-row>
         </el-card>

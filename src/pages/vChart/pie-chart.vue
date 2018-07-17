@@ -3,6 +3,7 @@
 
 	export default {
 	  extends: Pie,
+	  props: ['color'],
 	  mounted () {
 	    // Overwriting base render method with actual data.
 	    this.renderChart({
@@ -10,7 +11,7 @@
 	      datasets: [
 	        {
 	          label: 'GitHub Commits',
-	          backgroundColor: '#f87979',
+	          backgroundColor: this.color,
 	          data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11]
 	        }
 	      ]

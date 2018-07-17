@@ -58,6 +58,23 @@ Color.prototype.toHSL = function () {
     return { h: h * 360, s: s, l: l, a: a };
 };
 colorFunctions = {
+    toHSL:function(v){
+        //取出rgb
+        let rgb = [];
+        rgb = v.replace(/(?:\(|\)|rgb|RGB)*/g,"").split(",");
+        let strHex = "#";
+        for(let i=0; i<rgb.length; i++){
+            let hex = Number(rgb[i]).toString(16);
+            if(hex === "0"){
+                hex += hex; 
+            }else if(hex.length===1){
+                hex ="0"+hex;
+            }
+            strHex += hex;
+        };
+        //返回16进制色值
+        return strHex;
+    },
     rgb: function (r, g, b) {
         return colorFunctions.rgba(r, g, b, 1.0);
     },

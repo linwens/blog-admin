@@ -53,7 +53,7 @@
                 <el-row :gutter="20">
                     <el-col :span="8">
                         <el-card shadow="hover" class="m-statistics">
-                            <i class="iconfont icon-wenzhangliebiaoxiangqing"></i>
+                            <i class="iconfont icon-wenzhangliebiaoxiangqing" :style="{backgroundColor:dynamicColor1}"></i>
                             <div class="u-count">
                                 <p>50</p>
                                 <span>已发文章</span>
@@ -62,7 +62,7 @@
                     </el-col>
                     <el-col :span="8">
                         <el-card shadow="hover" class="m-statistics">
-                            <i class="iconfont icon-daiqueren"></i>
+                            <i class="iconfont icon-daiqueren" :style="{backgroundColor:dynamicColor2}"></i>
                             <div class="u-count">
                                 <p>26</p>
                                 <span>待发文章</span>
@@ -71,7 +71,7 @@
                     </el-col>
                     <el-col :span="8">
                         <el-card shadow="hover" class="m-statistics">
-                            <i class="iconfont icon-fangkeshu"></i>
+                            <i class="iconfont icon-fangkeshu" :style="{backgroundColor:dynamicColor3}"></i>
                             <div class="u-count">
                                 <p>123</p>
                                 <span>访客数</span>
@@ -88,19 +88,19 @@
                                 <el-col :span="8">
                                     <h3>vue后台系统</h3>
                                     <div class="u-progress" @click="showDetail(1)">
-                                        <el-progress type="circle" :width="140" :percentage="0" :stroke-width="8" color=""></el-progress>
+                                        <el-progress type="circle" :width="140" :percentage="0" :stroke-width="8" :color="$store.state.theme.themeColor"></el-progress>
                                     </div>
                                 </el-col>
                                 <el-col :span="8">
                                     <h3>express个人博客</h3>
                                     <div class="u-progress" @click="showDetail(2)">
-                                        <el-progress type="circle" :width="140" :percentage="50" :stroke-width="8" color=""></el-progress>
+                                        <el-progress type="circle" :width="140" :percentage="50" :stroke-width="8" :color="$store.state.theme.themeColor"></el-progress>
                                     </div>
                                 </el-col>
                                 <el-col :span="8">
                                     <h3>react-native DEMO</h3>
                                     <div class="u-progress" @click="showDetail(3)">
-                                        <el-progress type="circle" :width="140" :percentage="100" :stroke-width="8" color=""></el-progress>
+                                        <el-progress type="circle" :width="140" :percentage="100" :stroke-width="8" :color="$store.state.theme.themeColor"></el-progress>
                                     </div>
                                 </el-col>
                             </el-row>
@@ -170,15 +170,13 @@
         data: function(){
             return {
                 userType:this.$store.state.user.type,
-                myColor:'#1e90ff',
+                myColor:this.$store.state.theme.themeColor,
                 pfColor:[//颜色预选值
-                    '#ff4500',
-                    '#ff8c00',
-                    '#ffd700',
+                    '#E2A5F4',
+                    '#90E8EE',
                     '#90ee90',
                     '#00ced1',
                     '#1e90ff',
-                    '#c71585',
                 ],
                 avatorBg:{
                     backgroundImage:''
@@ -366,6 +364,15 @@
                 ap = 'http://osurqoqxj.bkt.clouddn.com/IMG_4106.jpg';
               }
               return ap;
+            },
+            dynamicColor1(){
+                return this.$store.state.theme.themeColor;
+            },
+            dynamicColor2(){
+                return this.colorFn.spin(this.$store.state.theme.themeColor,-0.6);
+            },
+            dynamicColor3(){
+                return this.colorFn.spin(this.$store.state.theme.themeColor,0.2);
             }
         },
         methods:{
@@ -381,9 +388,14 @@
             changeTheme(val){
                 //change事件是点击确定后触发
                 //active-change是选择颜色后实时展示
-                console.log('changeTheme===='+val);
-                console.log('curColor==='+this.myColor);
-                this.$store.dispatch('CHANGE_COLOR',this.myColor);
+                let newColor = '';
+                if(val.indexOf('#')<0){
+                    newColor = this.colorFn.toHSL(val);
+                }else{
+                    newColor = val;
+                }
+                this.myColor = newColor;
+                this.$store.dispatch('CHANGE_COLOR',newColor);
             },
             addIdea(item){
                 //增加点子
@@ -470,7 +482,7 @@
                 font-size: 50px;
                 color: #fff;
             }
-            i.iconfont.icon-wenzhangliebiaoxiangqing{
+            /*i.iconfont.icon-wenzhangliebiaoxiangqing{
                 background: #1E90FF;
             }
             i.iconfont.icon-daiqueren{
@@ -478,7 +490,7 @@
             }
             i.iconfont.icon-fangkeshu{
                 background: #02D902;
-            }
+            }*/
             div.u-count{
                 float: left;
                 p{
