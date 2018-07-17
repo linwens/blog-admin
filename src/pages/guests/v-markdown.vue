@@ -53,7 +53,7 @@
             @blur="handleInputConfirm"
         ></el-input>
         <el-button v-else class="button-new-tag" size="small" @click="showInput">+ Tag</el-button>
-        <el-button type="primary" @click="subArticle('save')" :disabled="btnCtrl" :style="{backgroundColor:$store.state.theme.themeColor,borderColor:$store.state.theme.themeColor}">保存</el-button>
+        <el-button type="primary" @click="subArticle('save')" :disabled="btnCtrl">保存</el-button>
         <el-button type="warning" @click="subArticle('publish')" :disabled="btnCtrl">发布</el-button>
     </div>
 </template>

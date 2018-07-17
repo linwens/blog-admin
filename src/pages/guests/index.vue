@@ -25,7 +25,6 @@
                         <el-col :span="4">
                             <el-switch
                                 v-model="sidebarState"
-                                :active-color="$store.state.theme.themeColor"
                                 @change="toggleSidebar"
                             ></el-switch>
                         </el-col>
@@ -53,7 +52,7 @@
                 <el-row :gutter="20">
                     <el-col :span="8">
                         <el-card shadow="hover" class="m-statistics">
-                            <i class="iconfont icon-wenzhangliebiaoxiangqing" :style="{backgroundColor:dynamicColor1}"></i>
+                            <i class="iconfont icon-wenzhangliebiaoxiangqing"></i>
                             <div class="u-count">
                                 <p>50</p>
                                 <span>已发文章</span>
@@ -62,7 +61,7 @@
                     </el-col>
                     <el-col :span="8">
                         <el-card shadow="hover" class="m-statistics">
-                            <i class="iconfont icon-daiqueren" :style="{backgroundColor:dynamicColor2}"></i>
+                            <i class="iconfont icon-daiqueren"></i>
                             <div class="u-count">
                                 <p>26</p>
                                 <span>待发文章</span>
@@ -71,7 +70,7 @@
                     </el-col>
                     <el-col :span="8">
                         <el-card shadow="hover" class="m-statistics">
-                            <i class="iconfont icon-fangkeshu" :style="{backgroundColor:dynamicColor3}"></i>
+                            <i class="iconfont icon-fangkeshu"></i>
                             <div class="u-count">
                                 <p>123</p>
                                 <span>访客数</span>
@@ -88,19 +87,19 @@
                                 <el-col :span="8">
                                     <h3>vue后台系统</h3>
                                     <div class="u-progress" @click="showDetail(1)">
-                                        <el-progress type="circle" :width="140" :percentage="0" :stroke-width="8" :color="$store.state.theme.themeColor"></el-progress>
+                                        <el-progress type="circle" :width="140" :percentage="0" :stroke-width="8"></el-progress>
                                     </div>
                                 </el-col>
                                 <el-col :span="8">
                                     <h3>express个人博客</h3>
                                     <div class="u-progress" @click="showDetail(2)">
-                                        <el-progress type="circle" :width="140" :percentage="50" :stroke-width="8" :color="$store.state.theme.themeColor"></el-progress>
+                                        <el-progress type="circle" :width="140" :percentage="50" :stroke-width="8"></el-progress>
                                     </div>
                                 </el-col>
                                 <el-col :span="8">
                                     <h3>react-native DEMO</h3>
                                     <div class="u-progress" @click="showDetail(3)">
-                                        <el-progress type="circle" :width="140" :percentage="100" :stroke-width="8" :color="$store.state.theme.themeColor"></el-progress>
+                                        <el-progress type="circle" :width="140" :percentage="100" :stroke-width="8"></el-progress>
                                     </div>
                                 </el-col>
                             </el-row>
@@ -152,7 +151,7 @@
                                           v-model="element.name">{{element.name}}
                                         </el-input>
                                     </div>
-                                    <el-button type="primary" :style="{backgroundColor:$store.state.theme.themeColor,borderColor:$store.state.theme.themeColor}" icon="el-icon-circle-plus-outline" @click="addIdea(item)">添加点子</el-button>
+                                    <el-button type="primary" icon="el-icon-circle-plus-outline" @click="addIdea(item)">添加点子</el-button>
                                 </draggable>
                             </el-card>
                         </el-col>
@@ -176,7 +175,7 @@
                     '#90E8EE',
                     '#90ee90',
                     '#00ced1',
-                    '#1e90ff',
+                    '#409EFF',
                 ],
                 avatorBg:{
                     backgroundImage:''
@@ -364,15 +363,6 @@
                 ap = 'http://osurqoqxj.bkt.clouddn.com/IMG_4106.jpg';
               }
               return ap;
-            },
-            dynamicColor1(){
-                return this.$store.state.theme.themeColor;
-            },
-            dynamicColor2(){
-                return this.colorFn.spin(this.$store.state.theme.themeColor,-0.6);
-            },
-            dynamicColor3(){
-                return this.colorFn.spin(this.$store.state.theme.themeColor,0.2);
             }
         },
         methods:{
@@ -482,7 +472,7 @@
                 font-size: 50px;
                 color: #fff;
             }
-            /*i.iconfont.icon-wenzhangliebiaoxiangqing{
+            i.iconfont.icon-wenzhangliebiaoxiangqing{
                 background: #1E90FF;
             }
             i.iconfont.icon-daiqueren{
@@ -490,7 +480,7 @@
             }
             i.iconfont.icon-fangkeshu{
                 background: #02D902;
-            }*/
+            }
             div.u-count{
                 float: left;
                 p{

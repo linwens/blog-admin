@@ -1,6 +1,5 @@
 <template>
   <div id="v-header" :style="{backgroundColor:$store.state.theme.themeColor}">
-      
       <el-col :span="24">
           <el-col :span="16">
               <h2>博客后台系统</h2>
@@ -76,7 +75,7 @@ export default {
     height: 70px;
     line-height: 70px;
     color: #ccc;
-    background: #03A9F4;
+    /*background: #03A9F4;*/
     z-index: 9;
     .u-logo{
       height: 70px;

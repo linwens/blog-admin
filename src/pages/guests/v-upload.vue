@@ -43,7 +43,7 @@
             </el-row>
         </el-form>
         <el-row>
-            <el-button type="primary" @click="submitImg" :disabled="btnCtrl" :style="{backgroundColor:$store.state.theme.themeColor,borderColor:$store.state.theme.themeColor}">保存提交</el-button>
+            <el-button type="primary" @click="submitImg" :disabled="btnCtrl">保存提交</el-button>
         </el-row>
     </div>
 </template>

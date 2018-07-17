@@ -13,7 +13,7 @@ import {BAR_SWITCH, CHANGE_COLOR} from '../mutations_types'
 const theme = {
 	state:{
 		sideBarCol:false,//侧边栏收缩开关
-		themeColor:'#1e90ff',//网站主题色
+		themeColor:'#409EFF',//网站主题色
 	},
 	mutations:{
 		[BAR_SWITCH](state){

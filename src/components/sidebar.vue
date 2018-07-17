@@ -1,7 +1,7 @@
 <template>
 	<!-- https://blog.csdn.net/harsima/article/details/77949465 -->
 	<div id="sideBar">
-		<el-menu 
+		<el-menu
 			:background-color="$store.state.theme.themeColor"
 			:text-color="'#fff'"
 			:active-text-color="'#fff'"

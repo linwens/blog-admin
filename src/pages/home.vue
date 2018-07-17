@@ -36,9 +36,6 @@
 		computed:{
 			toggleBar(){
 				return this.$store.state.theme.sideBarCol
-			},
-			dynamicColor(){
-				return this.colorFn.spin(this.$store.state.theme.themeColor,0.3,0.3);
 			}
 		},
 		components:{
