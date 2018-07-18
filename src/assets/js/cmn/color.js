@@ -15,7 +15,7 @@
 import color from 'css-color-function'
 import formula from './formula.json'
 
-const generateColors = primary => {
+export const generateColors = primary => {
   let colors = {}
 
   Object.keys(formula).forEach(key => {
@@ -24,5 +24,23 @@ const generateColors = primary => {
   })
   return colors
 }
-
-export default generateColors
+//一些色值转换方法
+export const colorsFn = {
+	toHSL:function(v){
+	    //取出rgb
+	    let rgb = [];
+	    rgb = v.replace(/(?:\(|\)|rgb|RGB)*/g,"").split(",");
+	    let strHex = "#";
+	    for(let i=0; i<rgb.length; i++){
+	        let hex = Number(rgb[i]).toString(16);
+	        if(hex === "0"){
+	            hex += hex; 
+	        }else if(hex.length===1){
+	            hex ="0"+hex;
+	        }
+	        strHex += hex;
+	    };
+	    //返回16进制色值
+	    return strHex;
+	},
+}

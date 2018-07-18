@@ -45,7 +45,7 @@ export default {
       avatorPic(){
         let ap = '';
         if(this.userType==='guests'){
-          ap = 'http://otvt0q8hg.bkt.clouddn.com/smile.png';
+          ap = 'http://otvt0q8hg.bkt.clouddn.com/luffy.jpg';
         }else{
           ap = 'http://osurqoqxj.bkt.clouddn.com/IMG_4106.jpg';
         }
@@ -105,7 +105,8 @@ export default {
       }
     }
     .u-userAvator{
-        float: right;
+      float: right;
+      position: relative;
       width: 40px;
       height: 40px;
       vertical-align: middle;
@@ -113,7 +114,13 @@ export default {
       margin: 15px 10px 0 0;
       overflow: hidden;
       img{
-        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform:translate(-50%,-50%);
+        width: auto;  
+        height: auto;  
+        max-width: 100%;
       }
     }
     .u-userName{

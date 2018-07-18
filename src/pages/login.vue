@@ -87,14 +87,6 @@ export default {
                                     user[key] = data[key]
                                 }
                                 this.dispatchUser(user);
-                                // this.$store.dispatch('USER_LOGIN', user).then(res=>{
-                                //     this.$router.options.routes = res;
-                                //     this.$router.addRoutes(res);
-                                // });
-                                // let redirect = decodeURIComponent(this.$route.query.redirect || '/index');
-                                // this.$router.push({
-                                //     path: redirect
-                                // });
                             } else {
                                 this.$message.error('用户名或密码错误');
                             }

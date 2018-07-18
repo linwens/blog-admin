@@ -1,13 +1,5 @@
 <template>
     <div id="Guest_table">
-        <!-- 这里是基础数据表格页,我希望放的东西有：
-        1、常规表格列表（表头，分页，筛选工具栏）ok
-        2、弹窗操作 ok
-        3、信息提示 ok
-        4、跳转文章编辑 ok
-        5、筛选工具栏：关键字搜索ok，排序ok，批量操作，
-        6、tab切换，使用keep-live ok
-        -->
         <el-card>
             <el-tabs tab-position="left">
                 <el-tab-pane label="文章列表">
@@ -33,7 +25,6 @@
                     </el-row>
                     <el-row>
                         <el-table :data="artList" stripe border class="m-el-table" :header-cell-class-name="'th-bgc'">
-                            <el-table-column type="selection" min-width="20" header-align="center" align="center"></el-table-column>
                             <el-table-column prop="title" label="文章标题" min-width="100" header-align="center" align="center"></el-table-column>
                             <el-table-column prop="brief" label="文章简介" min-width="300" header-align="center" align="center"></el-table-column>
                             <el-table-column prop="time" label="文章发布日期" min-width="80" header-align="center" align="center" :formatter="timeFormat"></el-table-column>

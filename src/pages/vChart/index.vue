@@ -19,10 +19,10 @@
                     </div>
                 </el-col>
                 <el-col :span="22">
-                    <Bar v-if="type===1" css-classes="m-chart-container" :height="200" :color="$store.state.theme.themeColor"></Bar>
-                    <Doughnut v-else-if="type===2" css-classes="m-chart-container" :height="200" :color="$store.state.theme.themeColor"></Doughnut>
-                    <Pie v-else-if="type===3" css-classes="m-chart-container" :height="200" :color="$store.state.theme.themeColor"></Pie>
-                    <line-chart v-else="type===4" css-classes="m-chart-container" :height="200" :color="$store.state.theme.themeColor"></line-chart>
+                    <Bar v-if="type===1" css-classes="m-chart-container" :height="200" :color="color"></Bar>
+                    <Doughnut v-else-if="type===2" css-classes="m-chart-container" :height="200" :color="color"></Doughnut>
+                    <Pie v-else-if="type===3" css-classes="m-chart-container" :height="200" :color="color"></Pie>
+                    <line-chart v-else="type===4" css-classes="m-chart-container" :height="200" :color="color"></line-chart>
                 </el-col>
             </el-row>
         </el-card>
@@ -39,6 +39,11 @@
         data: function(){
             return {
                 type:1,
+            }
+        },
+        computed:{
+            color(){
+                return this.$store.state.theme.themeColor;
             }
         },
         components:{

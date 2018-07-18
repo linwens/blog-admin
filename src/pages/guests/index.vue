@@ -50,7 +50,7 @@
                 <el-row :gutter="20">
                     <el-col :span="8">
                         <el-card shadow="hover" class="m-statistics">
-                            <i class="iconfont icon-wenzhangliebiaoxiangqing"></i>
+                            <i class="iconfont icon-wenzhangliebiaoxiangqing" :style="{backgroundColor:dynamicColor('color(primary h(+8) s(90%) l(*0.99))')}"></i>
                             <div class="u-count">
                                 <p>50</p>
                                 <span>已发文章</span>
@@ -59,7 +59,7 @@
                     </el-col>
                     <el-col :span="8">
                         <el-card shadow="hover" class="m-statistics">
-                            <i class="iconfont icon-daiqueren"></i>
+                            <i class="iconfont icon-daiqueren" :style="{backgroundColor:dynamicColor('color(primary shade(50%))')}"></i>
                             <div class="u-count">
                                 <p>26</p>
                                 <span>待发文章</span>
@@ -68,7 +68,7 @@
                     </el-col>
                     <el-col :span="8">
                         <el-card shadow="hover" class="m-statistics">
-                            <i class="iconfont icon-fangkeshu"></i>
+                            <i class="iconfont icon-fangkeshu" :style="{backgroundColor:dynamicColor('color(primary tint(30%))')}"></i>
                             <div class="u-count">
                                 <p>123</p>
                                 <span>访客数</span>
@@ -162,7 +162,8 @@
 <script>
     //import '@/assets/........' //引入less
     import draggable from 'vuedraggable';
-    import generateColors from '@/assets/js/cmn/color'
+    import {generateColors, colorsFn} from '@/assets/js/cmn/color'
+    import color from 'css-color-function'
     export default{
         name:'Guest_index',
         data: function(){
@@ -183,7 +184,7 @@
                 avatorBg:{
                     backgroundImage:''
                 },
-                sidebarState:true,
+                sidebarState:!this.$store.state.theme.sideBarCol,
                 needsPool:[
                     {
                         tabKey:1,
@@ -191,11 +192,11 @@
                         desc:'想到的需求',
                         dragItemlist:[
                             {
-                                name:'vuejs',
+                                name:'vuejs原理了解下',
                                 id:'1',
                             },
                             {
-                                name:'把后台系统优化下',
+                                name:'react搞起？',
                                 id:'2',
                             }
                         ]
@@ -206,11 +207,11 @@
                         desc:'正在努力实现的需求',
                         dragItemlist:[
                             {
-                                name:'fighting',
+                                name:'vue后台系统',
                                 id:'5',
                             },
                             {
-                                name:'node.js',
+                                name:'express个人博客',
                                 id:'6',
                             }
                         ]
@@ -221,7 +222,7 @@
                         desc:'完成并上线的需求',
                         dragItemlist:[
                             {
-                                name:'great',
+                                name:'react-native DEMO',
                                 id:'7',
                             },
                             {
@@ -350,22 +351,10 @@
         },
         computed:{
             nickName(){
-              let nn = '';
-              if(this.userType==='guests'){
-                nn = 'admin';
-              }else{
-                nn = '努力的小林';
-              }
-              return nn;
+              return 'guests';
             },
             avatorPic(){
-              let ap = '';
-              if(this.userType==='guests'){
-                ap = 'http://otvt0q8hg.bkt.clouddn.com/smile.png';
-              }else{
-                ap = 'http://osurqoqxj.bkt.clouddn.com/IMG_4106.jpg';
-              }
-              return ap;
+              return 'http://otvt0q8hg.bkt.clouddn.com/luffy.jpg';
             }
         },
         methods:{
@@ -383,7 +372,7 @@
                 //active-change是选择颜色后实时展示
                 let newColor = '';
                 if(val.indexOf('#')<0){
-                    newColor = this.colorFn.toHSL(val);
+                    newColor = colorsFn.toHSL(val);
                 }else{
                     newColor = val;
                 }
@@ -463,9 +452,12 @@
                 }else{
                     document.head.lastChild.innerText = this.newStyle;
                 }
-                
+            },/*切换主题色相关 end*/
+            dynamicColor(val){//加几个自定义颜色值
+                let colorStr = val.replace(/primary/g, this.$store.state.theme.themeColor);
+                let rgb = color.convert(colorStr);
+                return rgb;
             }
-            /*切换主题色相关 end*/
         },
         mounted(){
             this.projectDetail = this.project1;

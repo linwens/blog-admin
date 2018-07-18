@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import instance from '@/http';//导出拦截器中声明的instance
 import qs from 'qs';
-import colors from './colors';//引入颜色切换的方法函数
 //公共数字转化
 export const numFormat = (num, precision)=> {//字符串加小数点
     var precision = precision || 2;
@@ -61,5 +60,3 @@ export const getAjax = (url, params, type, noInter=false)=> {
         })
     })
 };
-//色值切换方法
-export const colorFn = colors;

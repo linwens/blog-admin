@@ -77,7 +77,7 @@ export default {
                 ]
             },
             imgList:[],
-            actionUrl:this.HOST+'/ajax/uploadImg'
+            actionUrl:"https://jsonplaceholder.typicode.com/posts/"
         }
     },
     components:{},
@@ -107,7 +107,6 @@ export default {
             this.url = res.backUrl;
             this.size = res.size;
             this.exif = res.exif;
-            console.log('图片提交成功');
         },
         submitImg(){
             let parmas = {title:this.imgForm.title, desc:this.imgForm.desc, exif:JSON.stringify(this.exif), size:this.size, url:this.url, option:this.option, type:this.bucketType};
@@ -116,17 +115,12 @@ export default {
             }
             this.$refs['imgForm'].validate((valid) => {
                 if (valid) {
-                    this.getAjax(this.HOST+'/ajax/saveImg',parmas,'POST').then(data=>{
-                            Notification({
-                                type:'success',
-                                message:data.res_msg,
-                                customClass:'hqb-notice',
-                                duration:2000,
-                                offset:300
-                            });
-                            setTimeout(()=>{
-                                this.$router.push('/gallery/list');
-                            }, 1500);
+                    Notification({
+                        type:'success',
+                        message:'照片上传成功',
+                        customClass:'hqb-notice',
+                        duration:2000,
+                        offset:300
                     });
                 }else{
                     Notification({
@@ -139,39 +133,8 @@ export default {
                     return false;
                 }
             })
-        },
-        getImginfo(){
-            this.getAjax(this.HOST+'/ajax/getImginfo',{gid:this.$route.params.id, option:this.option},'GET').then(data=>{
-                if(data.res_code==2){
-                    this.btnCtrl = true;
-                    Notification({
-                        type:'error',
-                        message:data.res_msg,
-                        customClass:'hqb-notice',
-                        duration:2000,
-                        offset:300
-                    });
-                    return;
-                }
-                this.imgForm.title=data.imgInfo.title;
-                this.imgForm.desc=data.imgInfo.desc;
-                this.size = data.imgInfo.size;
-                this.exif = data.imgInfo.exif;
-                this.bucketType = data.imgInfo.type;
-                this.typeStatus = true;
-                //图片
-                this.url = data.imgInfo.url;
-                this.imgList.push({"url":data.imgInfo.url})
-            });
-        }
-    },
-    mounted () {
-        if(this.$route.params.id&&this.$route.params.id!=':id'){
-            this.option = 'modify'
-            this.getImginfo();
         }
     }
-
 }
 </script>
     

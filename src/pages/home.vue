@@ -28,7 +28,6 @@
 		name:'home',
 		data:function(){
 			return{
-				// toggleBar:this.$store.state.theme.sideBarCol
 				sMainBox:'s-mainBox',
 				sBig:'s-big'
 			}
