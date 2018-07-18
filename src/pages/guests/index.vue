@@ -37,14 +37,12 @@
                             <el-color-picker
                                 v-model="myColor"
                                 :predefine="pfColor"
-                                @change="changeTheme"
+                                @change="changeDone"
                                 @active-change="changeTheme"
                             ></el-color-picker>
                         </el-col>
                     </el-row>
-                    <div class="u-userInfo">
-                        
-                    </div>
+                    <div class="u-userInfo"></div>
                     <div class="u-switch"></div>
                 </el-card>
             </el-col>
@@ -87,19 +85,19 @@
                                 <el-col :span="8">
                                     <h3>vue后台系统</h3>
                                     <div class="u-progress" @click="showDetail(1)">
-                                        <el-progress type="circle" :width="140" :percentage="0" :stroke-width="8"></el-progress>
+                                        <el-progress type="circle" :width="140" :percentage="0" :stroke-width="8" :color="$store.state.theme.themeColor"></el-progress>
                                     </div>
                                 </el-col>
                                 <el-col :span="8">
                                     <h3>express个人博客</h3>
                                     <div class="u-progress" @click="showDetail(2)">
-                                        <el-progress type="circle" :width="140" :percentage="50" :stroke-width="8"></el-progress>
+                                        <el-progress type="circle" :width="140" :percentage="50" :stroke-width="8" :color="$store.state.theme.themeColor"></el-progress>
                                     </div>
                                 </el-col>
                                 <el-col :span="8">
                                     <h3>react-native DEMO</h3>
                                     <div class="u-progress" @click="showDetail(3)">
-                                        <el-progress type="circle" :width="140" :percentage="100" :stroke-width="8"></el-progress>
+                                        <el-progress type="circle" :width="140" :percentage="100" :stroke-width="8" :color="$store.state.theme.themeColor"></el-progress>
                                     </div>
                                 </el-col>
                             </el-row>
@@ -164,12 +162,17 @@
 <script>
     //import '@/assets/........' //引入less
     import draggable from 'vuedraggable';
+    import generateColors from '@/assets/js/cmn/color'
     export default{
         name:'Guest_index',
         data: function(){
             return {
                 userType:this.$store.state.user.type,
                 myColor:this.$store.state.theme.themeColor,
+                originalStyle:'',//原始主题css string
+                middleStyle:'',//色值转换为关键字后的主题css string
+                newStyle:'',//新的主题css string
+                isInserted:false,
                 pfColor:[//颜色预选值
                     '#E2A5F4',
                     '#90E8EE',
@@ -386,6 +389,16 @@
                 }
                 this.myColor = newColor;
                 this.$store.dispatch('CHANGE_COLOR',newColor);
+                this.middleStyle = Object.assign({}, {'primary':this.myColor}, generateColors(this.myColor));//新的色值关键字json
+                let cssText = this.originalStyle
+                Object.keys(this.middleStyle).forEach(key => {
+                    cssText = cssText.replace(new RegExp('(:|\\s+)' + key, 'g'), '$1' + this.middleStyle[key])
+                })
+                this.newStyle = cssText;
+            },
+            changeDone(){
+                console.log('确定颜色');
+                this.insertStyle();
             },
             addIdea(item){
                 //增加点子
@@ -411,10 +424,52 @@
                     return val.id === id;
                 });
                 curList.splice(curEleIndex,1)
+            },
+            /*切换主题色相关 start */
+            //获取默认样式文件资源
+            getThemeStr(){
+                let headFirstStyle = document.head.children[2].innerText;//写死了第二个
+                this.originalStyle = this.getStyleTemplate(headFirstStyle);
+            },
+            //修改色值为关键字
+            getStyleTemplate (data) {
+                const colorMap = {
+                  '#3a8ee6': 'shade-1',
+                  '#409eff': 'primary',
+                  '#53a8ff': 'light-1',
+                  '#66b1ff': 'light-2',
+                  '#79bbff': 'light-3',
+                  '#8cc5ff': 'light-4',
+                  '#a0cfff': 'light-5',
+                  '#b3d8ff': 'light-6',
+                  '#c6e2ff': 'light-7',
+                  '#d9ecff': 'light-8',
+                  '#ecf5ff': 'light-9'
+                }
+                Object.keys(colorMap).forEach(key => {
+                  const value = colorMap[key]
+                  data = data.replace(new RegExp(key, 'ig'), value)
+                })
+                return data
+            },
+            //插入document
+            insertStyle(){
+                console.log('插入style');
+                if(!this.isInserted){//防止多次插入
+                    let style = document.createElement('style');
+                    style.innerText = this.newStyle;
+                    document.head.appendChild(style);
+                    this.isInserted = true;
+                }else{
+                    document.head.lastChild.innerText = this.newStyle;
+                }
+                
             }
+            /*切换主题色相关 end*/
         },
         mounted(){
             this.projectDetail = this.project1;
+            this.getThemeStr();
         }
     }
 </script>

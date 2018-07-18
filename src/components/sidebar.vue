@@ -75,7 +75,7 @@
 			margin-right: 3px;
 		}
 		.is-active{
-			background-color: rgb(24, 115, 204)!important;
+			/*background-color: rgb(24, 115, 204)!important;*/
 			&:before {
 			    content: '●';
 			    position: absolute;

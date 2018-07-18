@@ -30,24 +30,28 @@ instance.interceptors.request.use(config => {
 // http响应拦截器
 instance.interceptors.response.use(res => {// 响应成功关闭loading
     loadinginstace.close()
-    if(res.data.res_code == 3) {//接口返回错误为登录失效code则返回登录页，否则继续下一步
-        store.commit('USER_LOGOUT');
-        router.replace({
-            path: '/login',
-            query: {redirect: router.currentRoute.fullPath}
-        })
-        return Promise.reject(res);
-    }
-    if(res.data.res_code != 1&&res.data.res_code != 2) {
-        Notification.error({
-            message: res.data.res_msg,
-            customClass:'hqb-notice',
-            offset:300
-        })
-        // Message.error({
-        //     message: res.data.res_msg
-        // })
-        return Promise.reject(res);
+    if(res.config.custom){//这里对返回数据做自定义处理
+        console.log('-------进来自定义处理啦');
+    }else{
+        if(res.data.res_code == 3) {//接口返回错误为登录失效code则返回登录页，否则继续下一步
+            store.commit('USER_LOGOUT');
+            router.replace({
+                path: '/login',
+                query: {redirect: router.currentRoute.fullPath}
+            })
+            return Promise.reject(res);
+        }
+        if(res.data.res_code != 1&&res.data.res_code != 2) {
+            Notification.error({
+                message: res.data.res_msg,
+                customClass:'hqb-notice',
+                offset:300
+            })
+            // Message.error({
+            //     message: res.data.res_msg
+            // })
+            return Promise.reject(res);
+        }
     }
     return res
 }, error => {

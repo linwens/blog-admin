@@ -48,13 +48,14 @@ export const timeFormat = (val, type)=> {//拼接时间戳
     return str;
 }
 //公共请求方法，返回promise对象
-export const getAjax = (url, params, type)=> {
+export const getAjax = (url, params, type, noInter=false)=> {
     return new Promise((resolve, reject) => {
         instance({
             url: url,
             method: type,
             params: type==='GET'?params:'',//GET请求以URL拼接方式传参
-            data: type==='POST'?qs.stringify(params):'' //POST请求以请求体传参
+            data: type==='POST'?qs.stringify(params):'', //POST请求以请求体传参
+            custom:noInter, //接口走通情况下不走统一处理，自定义处理方法 Bealoon
         }).then(res => {resolve(res.data)}).catch(err => {
             // console.log('22222'); console.log(err);
         })
