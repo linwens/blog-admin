@@ -16,7 +16,6 @@
                         <el-col>
                             <p>登录IP：{{ipInfo.ip}}</p>
                             <p>登录地址：{{ipInfo.addr}}</p>
-                            <p>运营商：{{ipInfo.carrier}}</p>
                         </el-col>
                     </el-row>
                     <el-row type="flex" align="middle">
@@ -342,10 +341,9 @@
                         }
                     ]
                 },
-                ipInfo:{
-                    ip:'未获取',
-                    addr:'未获取',
-                    carrier:'未获取',
+                ipInfo:{//returnCitySN这个变量直接写在index.html上，请求http://pv.sohu.com/cityjson?ie=utf-8获得
+                    ip:returnCitySN.cip?returnCitySN.cip:'未获取',
+                    addr:returnCitySN.cname?returnCitySN.cname:'未获取',
                 }
             }
         },
@@ -463,20 +461,11 @@
                 let colorStr = val.replace(/primary/g, this.$store.state.theme.themeColor);
                 let rgb = color.convert(colorStr);
                 return rgb;
-            },
-            getIP(){//调用站长之家的ip查询工具
-                this.getAjax(this.HOST+'/ajax/getIP',{},'GET',true).then(data=>{
-                    this.ipInfo.ip = data.ip;
-                    let addrArr = data.address.split(' ');
-                    this.ipInfo.addr = addrArr[0]?addrArr[0]:'未获取';
-                    this.ipInfo.carrier =  addrArr[1]?addrArr[1]:'未获取';
-                })
             }
         },
         mounted(){
             this.projectDetail = this.project1;
             this.getThemeStr();
-            this.getIP();
         }
     }
 </script>
