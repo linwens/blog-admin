@@ -367,7 +367,6 @@
                 this.$store.dispatch('BAR_SWITCH');
             },
             showDetail (i){
-                console.log('进入showDetail');
                 //展示项目详情
                 this.projectDetail = this['project'+i];
             },
@@ -390,7 +389,6 @@
                 this.newStyle = cssText;
             },
             changeDone(){
-                console.log('确定颜色');
                 this.insertStyle();
             },
             addIdea(item){
@@ -447,7 +445,6 @@
             },
             //插入document
             insertStyle(){
-                console.log('插入style');
                 if(!this.isInserted){//防止多次插入
                     let style = document.createElement('style');
                     style.innerText = this.newStyle;

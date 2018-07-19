@@ -198,18 +198,29 @@ const mockdatas = {
 			let curArticle = state.articleList.find((val,i,arr)=>{
 			    return val.aid === article.aid;
 			});
-			for(let key in article){
-				if(curArticle.hasOwnProperty(key)){
-					if(key==='tags'){
-						curArticle[key] = [];//针对vue本地调试，改为body=>query
-						for(let pro in JSON.parse(article.tags)){
-						    curArticle[key].push(JSON.parse(article.tags)[pro])
+			if(curArticle){
+				for(let key in article){
+					if(curArticle.hasOwnProperty(key)){
+						if(key==='tags'){
+							curArticle[key] = [];//针对vue本地调试，改为body=>query
+							for(let pro in JSON.parse(article.tags)){
+							    curArticle[key].push(JSON.parse(article.tags)[pro])
+							}
+						}else{
+							curArticle[key] = article[key]
 						}
-					}else{
-						curArticle[key] = article[key]
 					}
 				}
+			}else{//如果curArticle不存在说明是新加数据
+				let timeStr = parseInt(new Date().getTime()/1000);
+				let newArt = Object.assign({},{time:timeStr, aid:'f3fac750-2b1b-11e8-af8e-91bfc1337408'},article)
+				newArt['tags']=[]
+				for(let pro in JSON.parse(article.tags)){
+				    newArt['tags'].push(JSON.parse(article.tags)[pro])
+				}
+				state.articleList.unshift(newArt);
 			}
+			
 		},
 		[SORT_ARTICLE](state, payload){
 			let type = payload.type;
