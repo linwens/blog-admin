@@ -10,8 +10,8 @@
                         {{nickName}}<i class="el-icon-caret-bottom"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>关于作者</el-dropdown-item>
-                        <el-dropdown-item>项目地址</el-dropdown-item>
+                        <a href="https://www.shy-u.xyz/" target="_blank"><el-dropdown-item>关于作者</el-dropdown-item></a>
+                        <a href="" target="_blank"><el-dropdown-item>项目地址</el-dropdown-item></a>
                         <el-dropdown-item divided><p @click="logout">退出登录</p></el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>

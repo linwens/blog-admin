@@ -14,8 +14,9 @@
                     </el-row>
                     <el-row class="u-loginInfo">
                         <el-col>
-                            <p>最近一次登录：2018-06-05</p>
-                            <p>本次登录地址：浙江杭州</p>
+                            <p>登录IP：{{ipInfo.ip}}</p>
+                            <p>登录地址：{{ipInfo.addr}}</p>
+                            <p>运营商：{{ipInfo.carrier}}</p>
                         </el-col>
                     </el-row>
                     <el-row type="flex" align="middle">
@@ -341,6 +342,11 @@
                         }
                     ]
                 },
+                ipInfo:{
+                    ip:'未获取',
+                    addr:'未获取',
+                    carrier:'未获取',
+                }
             }
         },
         components:{
@@ -457,11 +463,20 @@
                 let colorStr = val.replace(/primary/g, this.$store.state.theme.themeColor);
                 let rgb = color.convert(colorStr);
                 return rgb;
+            },
+            getIP(){//调用站长之家的ip查询工具
+                this.getAjax(this.HOST+'/ajax/getIP',{},'GET',true).then(data=>{
+                    this.ipInfo.ip = data.ip;
+                    let addrArr = data.address.split(' ');
+                    this.ipInfo.addr = addrArr[0]?addrArr[0]:'未获取';
+                    this.ipInfo.carrier =  addrArr[1]?addrArr[1]:'未获取';
+                })
             }
         },
         mounted(){
             this.projectDetail = this.project1;
             this.getThemeStr();
+            this.getIP();
         }
     }
 </script>
